@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Chinese Flashcards v2</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<script src="js/data_vocab.js"></script>
+<script src="js/data_dialog.js"></script>
+<script src="js/datasets.js"></script>
+<script src="js/app.js"></script>
+
+</head>
+
+<body>
+
+<select id="mode">
+<option value="ct">CN→TH</option>
+<option value="tc">TH→CN</option>
+</select>
+
+<select id="playMode" onchange="changePlayMode()">
+	<option value="manual">Manual</option> 
+	<option value="auto">Auto</option>
+      
+</select>
+
+<select id="nextMode" onchange="changeNextMode()">
+    <option value="seq">Seq</option>
+    <option value="random">Shuffle</option>
+</select>
+
+<select id="studyMode" onchange="changeStudyMode()">
+    <option value="vocab">Vocab</option>
+    <option value="dialog">Dialog</option>
+</select>
+
+<select id="category" onchange="changeCategory()">		
+	</select>
+	
+<select id="lesson" onchange="loadWords()">    
+	</select>
+	
+
+<div class="card" id="card" onclick="showAns()"></div>
+
+<div class="nav-buttons">
+
+<button onclick="previousWord()">&lt;</button>
+
+
+<span id="info" class="info">- / -</span>
+
+
+<button onclick="nextWord()">&gt;</button>
+
+</div>
+
+<div class="button-bar">
+    <button class="show-table-btn" id="show-table-btn" onclick="showTable()"> Data</button>
+</div>
+
+<div class="table-wrapper">
+	<table id="wordTable">    
+		<tbody>
+		</tbody>
+	</table>
+</div>
+
+<script>
+
+init();
+
+</script>
+</body>
+</html>

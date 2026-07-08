@@ -1,0 +1,209 @@
+
+body{font-family:Arial;max-width:900px;margin:20px auto;padding:10px}
+
+.table-wrapper {
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#1976d2;
+    color:white;
+    font-size:60px;
+    padding:10px;
+}
+
+td{
+    font-size:60px;
+    padding:10px;
+    border-bottom:1px solid #ddd;
+}
+
+tr:nth-child(even){
+    background:#f8f8f8;
+}
+
+.card{
+	min-height:500px;
+	background:white;
+
+    border-radius:16px;
+
+    padding:25px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+.info {
+	font-size:60px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.small{font-size:22px;line-height:1.6}
+
+/* Vocab */
+.card.vocab{
+    text-align:center;
+}
+
+.card.vocab .chinese{
+    font-size:120px;
+}
+
+.card.vocab .pinyin{
+    font-size:70px;
+    color:#333;
+}
+
+.card.vocab .thaiRead{
+    font-size:60px;
+    color:#0066cc;
+}
+
+.card.vocab .meaning{
+    font-size:70px;
+    color:#cc0000;
+}
+
+/* Dialog */
+.card.dialog{
+    text-align:left !important;
+    padding:18px;
+    line-height:1.6;
+}
+
+.card.dialog{
+    font-size:28px;
+}
+
+.card.dialog .chinese{
+    font-size:120px;
+}
+
+.card.dialog .pinyin{
+    font-size:70px;
+    color:#333;
+}
+
+.card.dialog .thaiRead{
+    font-size:60px;
+    color:#0066cc;
+}
+
+.card.dialog .meaning{
+    font-size:70px;
+    color:#cc0000;
+}
+
+.vocab-row td{
+    padding:8px 6px;
+    vertical-align:middle;
+}
+
+.vocab-cn{
+    width:25%;
+    font-size:80px;
+    color:#222;
+}
+
+.vocab-pinyin{
+    width:25%;
+    font-size:50px;
+    color:#666;
+}
+
+.vocab-read{
+    width:25%;
+    font-size:50px;
+    color:#1e88e5;      /* ฟ้า */
+}
+
+.vocab-th{
+    width:25%;
+    font-size:50px;
+    color:#d32f2f;      /* แดง */
+}
+
+.dialog-item{
+
+    padding:12px 0;
+
+}
+
+.dialog-cn{
+
+    font-size:80px;
+    color:#222;
+
+}
+
+.dialog-pinyin{
+
+    font-size:50px;
+    color:#666;
+    margin-top:4px;
+
+}
+
+.dialog-read{
+
+    font-size:50px;
+    color:#1e88e5;      /* ฟ้า */
+    margin-top:2px;
+
+}
+
+.dialog-th{
+
+    font-size:50px;
+    color:#d32f2f;      /* แดง */
+    margin-top:4px;
+
+}
+
+
+.button-bar{
+    display:flex;
+    width:100%;
+    margin-top:10px;
+}
+button{padding:8px 14px;margin:4px; font-size:80px;}
+select{padding:8px 14px;margin:4px; font-size:80px;}
+
+.run-btn{
+    width:100%;
+    height:200px;
+    font-size:60px;
+    border-radius:16px;
+}
+
+.show-table-btn{
+    width:100%;
+    height:200px;
+    font-size:60px;
+    border-radius:16px;
+}
+
+.nav-buttons{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    width:100%;
+    margin-top:20px;
+
+}
+
+
+.nav-buttons button{
+
+    font-size:80px;
+    width:300px;
+    height:200px;
+
+}

@@ -254,14 +254,14 @@ function showTable() {
 
 				tbody.innerHTML += `
 					<tr class="vocab-row">											
-							<td class="vocab-speaker">
-								<button class="speak-btn-table"
-										onclick="speakChineseText('${w.c}')">
-									<i class="fa-solid fa-volume-high"></i>
-								</button>
-							</td>
-
+							
 						<td class="vocab-cn">${w.c}</td>
+						<td class="vocab-speaker">
+							<button class="speak-btn-table"
+									onclick="speakChineseText('${w.c}')">
+								<i class="fa-solid fa-volume-high"></i>
+							</button>
+						</td>
 						<td class="vocab-pinyin">${w.p}</td>
 						<td class="vocab-read">${w.r}</td>
 						<td class="vocab-th">${w.t}</td>

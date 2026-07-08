@@ -218,28 +218,33 @@ function showTable() {
 
 			words.forEach((w, i) => {
 	
-				tbody.innerHTML += `
-					<tr>
-						<td>
-							<div class="dialog-item">	
-								<td class="vocab-speaker">
-									<button class="speak-btn-table"
-											onclick="speakChineseText('${w.c}')">
-										<i class="fa-solid fa-volume-high"></i>
-									</button>
-								</td>
+					tbody.innerHTML += `
+						<tr>
+							<td>
 
-								<div class="dialog-cn">${w.c}</div>
+								<div class="dialog-item">
 
-								<div class="dialog-pinyin">${w.p}</div>
+									<div class="dialog-title">
 
-								<div class="dialog-read">${w.r}</div>
+										<div class="dialog-cn">${w.c}</div>
 
-								<div class="dialog-th">${w.t}</div>
+										<button class="speak-btn-table"
+												onclick="speakChineseText('${w.c}')">
+											<i class="fa-solid fa-volume-high"></i>
+										</button>
 
-							</div>
-						</td>
-					</tr>
+									</div>
+
+									<div class="dialog-pinyin">${w.p}</div>
+
+									<div class="dialog-read">${w.r}</div>
+
+									<div class="dialog-th">${w.t}</div>
+
+								</div>
+
+							</td>
+						</tr>
 				`;
 
 			});

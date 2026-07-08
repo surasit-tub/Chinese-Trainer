@@ -250,3 +250,14 @@ select{padding:8px 14px;margin:4px; font-size:80px;}
     height:200px;
 
 }
+
+.dialog-title{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.dialog-title .dialog-cn{
+    margin:0;
+}

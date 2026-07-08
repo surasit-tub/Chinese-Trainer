@@ -221,7 +221,13 @@ function showTable() {
 				tbody.innerHTML += `
 					<tr>
 						<td>
-							<div class="dialog-item">
+							<div class="dialog-item">	
+								<td class="vocab-speaker">
+									<button class="speak-btn-table"
+											onclick="speakChineseText('${w.c}')">
+										<i class="fa-solid fa-volume-high"></i>
+									</button>
+								</td>
 
 								<div class="dialog-cn">${w.c}</div>
 
@@ -242,7 +248,14 @@ function showTable() {
 			words.forEach(w=>{
 
 				tbody.innerHTML += `
-					<tr class="vocab-row">
+					<tr class="vocab-row">											
+							<td class="vocab-speaker">
+								<button class="speak-btn-table"
+										onclick="speakChineseText('${w.c}')">
+									<i class="fa-solid fa-volume-high"></i>
+								</button>
+							</td>
+
 						<td class="vocab-cn">${w.c}</td>
 						<td class="vocab-pinyin">${w.p}</td>
 						<td class="vocab-read">${w.r}</td>
@@ -399,38 +412,68 @@ function previousWord(){
 
 function showQuestion() {
 
-	applyCardStyle();
+    applyCardStyle();
 
     const modeSelect = document.getElementById("mode").value;
 
-    card.innerHTML =
-        (modeSelect=="ct")
-            ? `<div class="chinese">${cur.c}</div>`
-            : `<div class="chinese">${cur.t}</div>`;
+    card.innerHTML = `
+			<div class="word-line">
+				<div class="chinese">
+					${modeSelect=="ct" ? cur.c : cur.t}
+				</div>
+
+				<button class="speak-btn"
+					onclick="event.stopPropagation(); speakChinese();">
+					<i class="fa-solid fa-volume-high"></i>
+				</button>
+			</div>
+		`;
 }
 
 function showAnswer() {
 
-	applyCardStyle();
+    applyCardStyle();
 
-    const modeSelect = document.getElementById("mode").value;	
+    const modeSelect = document.getElementById("mode").value;
 
-	if (modeSelect == "ct") {
-		card.innerHTML = `
-			<div class="chinese">${cur.c}</div>
+    if (modeSelect == "ct") {
+
+        card.innerHTML = `
+			<div class="word-line">
+
+				<div class="chinese">${cur.c}</div>
+
+				<button class="speak-btn"
+					onclick="event.stopPropagation(); speakChinese();">
+					<i class="fa-solid fa-volume-high"></i>
+				</button>
+
+			</div>
+
 			<div class="pinyin">${cur.p}</div>
 			<div class="thaiRead">${cur.r}</div>
 			<div class="meaning">${cur.t}</div>
 		`;
-	} else {
+
+    } else {
+
 		card.innerHTML = `
-			<div class="chinese">${cur.t}</div>
+			<div class="word-line">
+
+				<div class="chinese">${cur.t}</div>
+
+				<button class="speak-btn"
+					onclick="event.stopPropagation(); speakChinese();">
+					<i class="fa-solid fa-volume-high"></i>
+				</button>
+
+			</div>
+
 			<div class="pinyin">${cur.c}</div>
 			<div class="thaiRead">${cur.p}</div>
 			<div class="meaning">${cur.r}</div>
-		`;
-	}	
-	
+		`;        
+    }
 }
 
 function showAns() {
@@ -452,6 +495,32 @@ function applyCardStyle(){
 
     card.classList.remove("vocab","dialog");
     card.classList.add(studyMode);
+}
+
+function speakChinese(){
+
+    if(!cur) return;
+
+    const utter = new SpeechSynthesisUtterance(cur.c);
+
+    utter.lang = "zh-CN";
+    utter.rate = 0.8;
+
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+
+}
+
+function speakChineseText(text){
+
+    const utter = new SpeechSynthesisUtterance(text);
+
+    utter.lang = "zh-CN";
+    utter.rate = 0.8;
+
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+
 }
 
 function init() {

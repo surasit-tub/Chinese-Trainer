@@ -109,14 +109,14 @@ function toggleAnswerMode(){
 
     if(autoShowAnswer){
 
-        icon.className="fa-solid fa-eye";
+        icon.className="fa-solid fa-closed-captioning";
 
         answerVisible=true;
         showAnswer();
 
     }else{
 
-        icon.className="fa-solid fa-eye-slash";
+        icon.className="fa-regular fa-closed-captioning";
 
         answerVisible=false;
         showQuestion();
@@ -713,7 +713,7 @@ function init() {
 	card.addEventListener("pointerdown", function(e){
 
 		card.style.transition = "none";
-		card.setPointerCapture(e.pointerId);
+		//card.setPointerCapture(e.pointerId);
 
 		dragging = true;
 
@@ -746,7 +746,7 @@ function init() {
 
 			card.style.transition = "transform .2s ease";
 			card.style.transform = "translateX(0)";
-			card.releasePointerCapture(e.pointerId);
+			//card.releasePointerCapture(e.pointerId);
 			return;
 
 		}

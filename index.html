@@ -37,36 +37,42 @@
 <select id="lesson" onchange="loadWords()">    
 	</select>
 
-<button id="answerModeBtn" onclick="toggleAnswerMode()">
-    <i id="answerModeIcon"
-       class="fa-solid fa-eye-slash"></i>
-</button>
+<div class="button-bar">
+	<button id="answerModeBtn" onclick="toggleAnswerMode()">
+		<i id="answerModeIcon"
+		   class="fa-regular fa-closed-captioning"></i>
+	</button>
 
-<button id="speakerBtn" onclick="toggleSpeaker()">
-    <i id="speakerIcon" class="fa-solid fa-volume-xmark"></i>
-</button>
-
-<button id="autoBtn" onclick="toggleAuto()">
-    <i id="autoIcon" class="fa-solid fa-play"></i>
-</button>
+	<button id="speakerBtn" onclick="toggleSpeaker()">
+		<i id="speakerIcon" class="fa-solid fa-volume-xmark"></i>
+	</button>
+</div>
+<i class="fa-regular fa-closed-captioning"></i>
 
 <div class="card-wrapper">
 
-    <button id="prevBtn" class="nav-btn left"
-            onclick="previous()">
-        <i class="fa-solid fa-chevron-left"></i>
-    </button>
+	<button class="nav-btn left" onclick="previous()">
+		<i class="fa-solid fa-chevron-left"></i>
+	</button>
+	
+	<div id="card" class="card"></div>
 
-    <div id="card" class="card"></div>
-
-    <button id="nextBtn" class="nav-btn right"
-            onclick="next()">
-        <i class="fa-solid fa-chevron-right"></i>
-    </button>
+	<button class="nav-btn right" onclick="next()">
+		<i class="fa-solid fa-chevron-right"></i>
+	</button>
 
 </div>
 
-<div id="info"></div>
+<div class="button-bar">
+	<div class="info" id="info"></div>
+</div>
+
+
+<div class="button-bar">
+	<button class= "autoBtn" id="autoBtn" onclick="toggleAuto()">
+		<i id="autoIcon" class="fa-solid fa-play"></i>
+	</button>
+</div>
 
 <div class="button-bar">
     <button class="show-table-btn" id="show-table-btn" onclick="showTable()"> 

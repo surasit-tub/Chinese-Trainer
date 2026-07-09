@@ -85,51 +85,19 @@ function animateChange(callback, direction){
 
 }
 
-function slideNext(callback){
-
-    card.style.transform = "translateX(-80px)";
-    card.style.opacity = 0;
-
-    setTimeout(()=>{
-
-        callback();
-
-        card.style.transform = "translateX(0)";
-        card.style.opacity = 1;
-
-    },150);
-
-}
-
-function slidePrevious(callback){
-
-    card.style.transform = "translateX(80px)";
-    card.style.opacity = 0;
-
-    setTimeout(()=>{
-
-        callback();
-
-        card.style.transform = "translateX(0)";
-        card.style.opacity = 1;
-
-    },150);
-
-}
-
 function next(){
 
-    slideNext(function(){
+    animateChange(() => {
         nextWord();
-    });
+    }, "next");
 
 }
 
 function previous(){
 
-    slidePrevious(function(){
+    animateChange(() => {
         previousWord();
-    });
+    }, "previous");
 
 }
 
@@ -511,18 +479,13 @@ function nextWord() {
 
     }
 	
-	animateChange(() => {
-
-		if(autoShowAnswer){
-			answerVisible=true;
-			showAnswer();
-		}else{
-			answerVisible=false;
-			showQuestion();
-		}
-
-	}, "next");
-
+	if(autoShowAnswer){
+		answerVisible=true;
+		showAnswer();
+	}else{
+		answerVisible=false;
+		showQuestion();
+	}
 	
 	if(speakerOn){
 		speakChinese();
@@ -578,17 +541,13 @@ function previousWord(){
 
     }
 	
-	animateChange(() => {
-
-		if(autoShowAnswer){
-			answerVisible=true;
-			showAnswer();
-		}else{
-			answerVisible=false;
-			showQuestion();
-		}
-
-	}, "previous");
+	if(autoShowAnswer){
+		answerVisible=true;
+		showAnswer();
+	}else{
+		answerVisible=false;
+		showQuestion();
+	}
 
 	if(speakerOn){
 		speakChinese();
@@ -626,8 +585,6 @@ function showAnswer() {
     const modeSelect = document.getElementById("mode").value;
 
     if (modeSelect == "ct") {
-
-
 
 			card.innerHTML = `
 				<div class="word-line">

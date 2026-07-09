@@ -21,10 +21,6 @@
 <option value="tc">TH→CN</option>
 </select>
 
-<button id="speakerBtn" onclick="toggleSpeaker()">
-    <i id="speakerIcon" class="fa-solid fa-volume-xmark"></i>
-</button>
-
 <select id="nextMode" onchange="changeNextMode()">
     <option value="seq">Seq</option>
     <option value="random">Shuffle</option>
@@ -35,36 +31,42 @@
     <option value="dialog">Dialog</option>
 </select>
 
-<button id="answerModeBtn" onclick="toggleAnswerMode()">
-    <i id="answerModeIcon"
-       class="fa-solid fa-eye-slash"></i>
-</button>
-
 <select id="category" onchange="changeCategory()">		
 	</select>
 	
 <select id="lesson" onchange="loadWords()">    
 	</select>
 
+<button id="answerModeBtn" onclick="toggleAnswerMode()">
+    <i id="answerModeIcon"
+       class="fa-solid fa-eye-slash"></i>
+</button>
 
-<div class="card" id="card"></div>
-
-
-<div class="nav-buttons">
-
-<button onclick="previousWord()"><i class="fa-solid fa-left-long"></i></button>
-
-
-<span id="info" class="info">- / -</span>
-
-
-<button onclick="nextWord()"><i class="fa-solid fa-right-long"></i></button>
-
-</div>
+<button id="speakerBtn" onclick="toggleSpeaker()">
+    <i id="speakerIcon" class="fa-solid fa-volume-xmark"></i>
+</button>
 
 <button id="autoBtn" onclick="toggleAuto()">
     <i id="autoIcon" class="fa-solid fa-play"></i>
 </button>
+
+<div class="card-wrapper">
+
+    <button id="prevBtn" class="nav-btn left"
+            onclick="previous()">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <div id="card" class="card"></div>
+
+    <button id="nextBtn" class="nav-btn right"
+            onclick="next()">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+</div>
+
+<div id="info"></div>
 
 <div class="button-bar">
     <button class="show-table-btn" id="show-table-btn" onclick="showTable()"> 

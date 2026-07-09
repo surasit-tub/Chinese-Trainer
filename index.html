@@ -2,10 +2,10 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Chinese Flashcards v2</title>
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<title>เรียนจีนใกล้ฉัน ฟรี chatgpt</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
+
 
 <script src="js/data_vocab.js"></script>
 <script src="js/data_dialog.js"></script>
@@ -21,11 +21,9 @@
 <option value="tc">TH→CN</option>
 </select>
 
-<select id="playMode" onchange="changePlayMode()">
-	<option value="manual">Manual</option> 
-	<option value="auto">Auto</option>
-      
-</select>
+<button id="speakerBtn" onclick="toggleSpeaker()">
+    <i id="speakerIcon" class="fa-solid fa-volume-xmark"></i>
+</button>
 
 <select id="nextMode" onchange="changeNextMode()">
     <option value="seq">Seq</option>
@@ -37,6 +35,11 @@
     <option value="dialog">Dialog</option>
 </select>
 
+<button id="answerModeBtn" onclick="toggleAnswerMode()">
+    <i id="answerModeIcon"
+       class="fa-solid fa-eye-slash"></i>
+</button>
+
 <select id="category" onchange="changeCategory()">		
 	</select>
 	
@@ -44,23 +47,29 @@
 	</select>
 
 
-<div class="card" id="card" onclick="showAns()"></div>
+<div class="card" id="card"></div>
 
 
 <div class="nav-buttons">
 
-<button onclick="previousWord()">&lt;</button>
+<button onclick="previousWord()"><i class="fa-solid fa-left-long"></i></button>
 
 
 <span id="info" class="info">- / -</span>
 
 
-<button onclick="nextWord()">&gt;</button>
+<button onclick="nextWord()"><i class="fa-solid fa-right-long"></i></button>
 
 </div>
 
+<button id="autoBtn" onclick="toggleAuto()">
+    <i id="autoIcon" class="fa-solid fa-play"></i>
+</button>
+
 <div class="button-bar">
-    <button class="show-table-btn" id="show-table-btn" onclick="showTable()"> Data</button>
+    <button class="show-table-btn" id="show-table-btn" onclick="showTable()"> 
+		<i class="fa-regular fa-folder-closed"></i>
+	</button>
 </div>
 
 <div class="table-wrapper">

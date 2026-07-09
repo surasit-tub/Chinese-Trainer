@@ -77,9 +77,23 @@ tr:nth-child(even){
 
     border-radius:16px;
 
-    padding:25px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
+    padding:25px;    
+	box-shadow:0 8px 20px rgba(0,0,0,.15);
+	
+	transition: all .2s ease;
+	
+	animation:fadeIn .2s;
+	
 }
+
+.card:active{
+    transform:scale(.98);
+}
+
+.card:hover{
+    box-shadow:0 12px 30px rgba(0,0,0,.2);
+}
+
 .info {
 	font-size:60px;
 	margin-top: 10px;
@@ -217,6 +231,14 @@ tr:nth-child(even){
 button{padding:8px 14px;margin:4px; font-size:80px;}
 select{padding:8px 14px;margin:4px; font-size:80px;}
 
+button{
+    transition:.15s;
+}
+
+button:active{
+    transform:scale(.9);
+}
+
 .run-btn{
     width:100%;
     height:200px;
@@ -260,4 +282,91 @@ select{padding:8px 14px;margin:4px; font-size:80px;}
 
 .dialog-title .dialog-cn{
     margin:0;
+}
+
+.pop{
+    animation:pop .25s;
+}
+
+.meaning{
+
+    animation:up .25s;
+
+}
+
+.answer-placeholder{
+
+    width:80%;
+    height:220px;
+
+    margin:20px auto;
+
+    border-radius:15px;
+
+    backdrop-filter:blur(8px);
+
+    background:
+        repeating-linear-gradient(
+            45deg,
+            #f4f4f4 0,
+            #f4f4f4 12px,
+            #ffffff 12px,
+            #ffffff 24px
+        );
+
+    border:0px solid #ddd;	
+
+}
+
+@keyframes fadeIn{
+
+from{
+    opacity:0;
+}
+
+to{
+    opacity:1;
+}
+
+}
+
+
+@keyframes pop{
+
+0%{
+    transform:scale(1);
+}
+
+50%{
+    transform:scale(1.3);
+}
+
+100%{
+    transform:scale(1);
+}
+
+}
+
+@keyframes up{
+
+from{
+
+    opacity:0;
+    transform:translateY(12px);
+
+}
+
+to{
+
+    opacity:1;
+    transform:translateY(0);
+
+}
+
+}
+
+#wordTable{
+
+    animation:fadeIn .2s;
+
 }

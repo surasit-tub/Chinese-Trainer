@@ -1,7 +1,12 @@
 console.log("app.js loaded");
 
+const SLIDE_DISTANCE = 30;
+
 let studyMode = "vocab";
 let answerTimer = null;
+
+let autoRunning = false;
+let speakerOn = false;
 
 let allLines = [];
 let currentIndex = 0;
@@ -13,10 +18,165 @@ let autoMode = false;
 let tableVisible = false;
 let answerVisible = false;
 
+let autoShowAnswer = false;
+
 let randomWords = [];
 let randomIndex = 0;
 
+let touchStartX = 0;
+let touchEndX = 0;
+let isSwiping = false;
+let dragging = false;
 
+
+function handleSwipe(){
+
+    const diff = touchEndX - touchStartX;
+
+    // ลากไม่ถึง
+    if(Math.abs(diff) < 50){
+
+        card.style.transition = "transform .2s ease";
+        card.style.transform = "translateX(0)";
+        return;
+
+    }
+
+    if(diff > 0){
+
+        animateChange(function(){
+
+            previousWord();
+
+        },"previous");
+
+    }else{
+
+        animateChange(function(){
+
+            nextWord();
+
+        },"next");
+
+    }
+
+}
+
+function animateChange(callback, direction){
+
+    const card = document.getElementById("card");
+
+    card.style.transition = "all .2s ease";
+    card.style.transform =
+        direction=="next"
+            ? `translateX(-${SLIDE_DISTANCE}px)`
+            : `translateX(${SLIDE_DISTANCE}px)`;
+
+    card.style.opacity = "0";
+
+    setTimeout(()=>{
+
+        callback();
+
+        card.style.transform = "translateX(0)";
+        card.style.opacity = "1";
+
+    },200);
+
+}
+
+function slideNext(callback){
+
+    card.style.transform = "translateX(-80px)";
+    card.style.opacity = 0;
+
+    setTimeout(()=>{
+
+        callback();
+
+        card.style.transform = "translateX(0)";
+        card.style.opacity = 1;
+
+    },150);
+
+}
+
+function slidePrevious(callback){
+
+    card.style.transform = "translateX(80px)";
+    card.style.opacity = 0;
+
+    setTimeout(()=>{
+
+        callback();
+
+        card.style.transform = "translateX(0)";
+        card.style.opacity = 1;
+
+    },150);
+
+}
+
+function next(){
+
+    slideNext(function(){
+        nextWord();
+    });
+
+}
+
+function previous(){
+
+    slidePrevious(function(){
+        previousWord();
+    });
+
+}
+
+function toggleAnswerMode(){
+
+    autoShowAnswer = !autoShowAnswer;
+
+    const icon=document.getElementById("answerModeIcon");
+
+    if(autoShowAnswer){
+
+        icon.className="fa-solid fa-eye";
+
+        answerVisible=true;
+        showAnswer();
+
+    }else{
+
+        icon.className="fa-solid fa-eye-slash";
+
+        answerVisible=false;
+        showQuestion();
+
+    }
+
+}
+
+function toggleSpeaker(){
+
+    speakerOn = !speakerOn;
+
+    const icon = document.getElementById("speakerIcon");
+
+    if(speakerOn){
+        icon.className = "fa-solid fa-volume-high";
+    }else{
+        icon.className = "fa-solid fa-volume-xmark";
+    }
+	
+	// Animation
+    speakerBtn.classList.add("pop");
+
+    setTimeout(()=>{
+        speakerBtn.classList.remove("pop");
+    },250);
+
+}
 
 function shuffle(array) {
 
@@ -80,30 +240,6 @@ function changeCategory(){
 
     buildLesson();
     loadWords();
-}
-
-function changePlayMode(){
-
-    if(autoTimer){
-        clearInterval(autoTimer);
-        autoTimer = null;
-    }
-
-    if(answerTimer){
-        clearTimeout(answerTimer);
-        answerTimer = null;
-    }
-
-    const playMode = document.getElementById("playMode").value;
-
-    if(playMode=="auto"){
-
-        autoPlay();
-
-        autoTimer = setInterval(autoPlay,5000);
-
-    }
-
 }
 
 function buildCategory(){
@@ -196,13 +332,13 @@ function loadWords(){
     } else {
         showQuestion();
     }
+		
 	
-	
-	const showTableBtn = document.getElementById("show-table-btn");
 	const tbody = document.querySelector("#wordTable tbody");
 	tbody.innerHTML = "";
 	tableVisible  = true;
-	showTableBtn.textContent = "Data";
+	const showTableBtn = document.getElementById("show-table-btn");
+	showTableBtn.innerHTML = '<i class="fa-regular fa-folder-closed"></i>';
 }
 
 function showTable() {
@@ -273,20 +409,47 @@ function showTable() {
 		}
 						
 		tableVisible  = false;
-		showTableBtn.textContent = "Hide";			
+		showTableBtn.innerHTML = '<i class="fa-regular fa-folder-open"></i></i>';		
 		
 	}
 	else {
 		tableVisible  = true;
-		showTableBtn.textContent = "Data";
+		showTableBtn.innerHTML = '<i class="fa-regular fa-folder-closed"></i></i>';
 	}
 }
 
+function toggleAuto(){
+
+    autoRunning = !autoRunning;
+
+    const icon = document.getElementById("autoIcon");
+
+    if(autoRunning){
+
+        icon.className = "fa-solid fa-stop";
+
+        autoPlay();
+
+        autoTimer = setInterval(autoPlay,5000);
+
+    }else{
+
+        icon.className = "fa-solid fa-play";
+
+        if(autoTimer){
+            clearInterval(autoTimer);
+            autoTimer = null;
+        }
+
+    }
+
+}
 
 function autoPlay() {
 
     answerVisible = false;
     nextWord();
+	
 
     if(answerTimer){
         clearTimeout(answerTimer);
@@ -300,6 +463,7 @@ function autoPlay() {
     }, 3000);
 
 }
+
 
 function nextWord() {
 	
@@ -347,12 +511,22 @@ function nextWord() {
 
     }
 	
-	if (answerVisible) {
-        showAnswer();
-    } else {
-        showQuestion();
-    }
-		
+	animateChange(() => {
+
+		if(autoShowAnswer){
+			answerVisible=true;
+			showAnswer();
+		}else{
+			answerVisible=false;
+			showQuestion();
+		}
+
+	}, "next");
+
+	
+	if(speakerOn){
+		speakChinese();
+	}		
 		
 }
 
@@ -385,9 +559,7 @@ function previousWord(){
         cur = randomWords[randomIndex];
 
         document.getElementById("info").innerHTML =
-        `${randomIndex + 1} / ${words.length}`;
-       
-
+        `${randomIndex + 1} / ${words.length}`;       
         
 
     }else{
@@ -406,12 +578,21 @@ function previousWord(){
 
     }
 	
-	if (answerVisible) {
-        showAnswer();
-    } else {
-        showQuestion();
-    }
+	animateChange(() => {
 
+		if(autoShowAnswer){
+			answerVisible=true;
+			showAnswer();
+		}else{
+			answerVisible=false;
+			showQuestion();
+		}
+
+	}, "previous");
+
+	if(speakerOn){
+		speakChinese();
+	}
 }
 
 
@@ -432,9 +613,12 @@ function showQuestion() {
 					<i class="fa-solid fa-volume-high"></i>
 				</button>
 			</div>
+			
+			<div class="answer-placeholder" onclick="showAns()">
+				<div class="reveal-text"></div>
+			</div>
 		`;
 }
-
 function showAnswer() {
 
     applyCardStyle();
@@ -443,46 +627,62 @@ function showAnswer() {
 
     if (modeSelect == "ct") {
 
-        card.innerHTML = `
-			<div class="word-line">
 
-				<div class="chinese">${cur.c}</div>
 
-				<button class="speak-btn"
-					onclick="event.stopPropagation(); speakChinese();">
-					<i class="fa-solid fa-volume-high"></i>
-				</button>
+			card.innerHTML = `
+				<div class="word-line">
 
-			</div>
+					<div class="chinese">${cur.c}</div>
 
-			<div class="pinyin">${cur.p}</div>
-			<div class="thaiRead">${cur.r}</div>
-			<div class="meaning">${cur.t}</div>
-		`;
+					<button class="speak-btn"
+						onclick="event.stopPropagation(); speakChinese();">
+						<i class="fa-solid fa-volume-high"></i>
+					</button>
+
+				</div>
+				<div onclick="showAns()">
+					<div class="pinyin">${cur.p}</div>
+					<div class="thaiRead">${cur.r}</div>
+					<div class="meaning">${cur.t}</div>
+				</div>
+				
+			`;
+        
 
     } else {
 
-		card.innerHTML = `
-			<div class="word-line">
 
-				<div class="chinese">${cur.t}</div>
+			card.innerHTML = `
+				<div class="word-line">
 
-				<button class="speak-btn"
-					onclick="event.stopPropagation(); speakChinese();">
-					<i class="fa-solid fa-volume-high"></i>
-				</button>
+					<div class="chinese">${cur.t}</div>
 
-			</div>
+					<button class="speak-btn"
+						onclick="event.stopPropagation(); speakChinese();">
+						<i class="fa-solid fa-volume-high"></i>
+					</button>
 
-			<div class="pinyin">${cur.c}</div>
-			<div class="thaiRead">${cur.p}</div>
-			<div class="meaning">${cur.r}</div>
-		`;        
+				</div>
+				<div onclick="showAns()">
+					<div class="pinyin">${cur.c}</div>
+					<div class="thaiRead">${cur.p}</div>
+					<div class="meaning">${cur.r}</div>
+				</div>
+			`;        
+
     }
 }
 
+
 function showAns() {
 
+	if(isSwiping){
+
+        isSwiping = false;
+        return;
+
+    }
+	
     if (!cur) return;
 
     answerVisible = !answerVisible;
@@ -502,9 +702,23 @@ function applyCardStyle(){
     card.classList.add(studyMode);
 }
 
+function animateSpeaker(){
+
+    const speakerBtn = document.getElementById("speakerBtn");
+
+    speakerBtn.classList.add("pop");
+
+    setTimeout(()=>{
+        speakerBtn.classList.remove("pop");
+    },250);
+
+}
+
 function speakChinese(){
 
-    if(!cur) return;
+    if(!cur || !speakerOn) return;
+
+    animateSpeaker();
 
     const utter = new SpeechSynthesisUtterance(cur.c);
 
@@ -518,6 +732,10 @@ function speakChinese(){
 
 function speakChineseText(text){
 
+	if(!speakerOn) return;
+
+    animateSpeaker();
+	
     const utter = new SpeechSynthesisUtterance(text);
 
     utter.lang = "zh-CN";
@@ -528,9 +746,41 @@ function speakChineseText(text){
 
 }
 
+
 function init() {
     buildCategory();
     changeCategory();
+	
+	const card = document.getElementById("card");
+	
+	card.addEventListener("pointerdown", function(e){
+			
+		dragging = true;
+
+		touchStartX = e.clientX;
+
+	});
+
+	card.addEventListener("pointerup", function(e){
+		
+		dragging = false;
+
+		touchEndX = e.clientX;
+
+		handleSwipe();
+
+	});
+	
+	card.addEventListener("pointermove",function(e){
+
+		if(!dragging) return;
+
+		let diff = e.clientX-startX;
+
+		card.style.transform = `translateX(${diff * 0.3}px)`;
+
+	});
+
 }
 
 

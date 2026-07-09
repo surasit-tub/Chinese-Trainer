@@ -754,30 +754,58 @@ function init() {
 	const card = document.getElementById("card");
 	
 	card.addEventListener("pointerdown", function(e){
-			
+
+		card.style.transition = "none";
+		card.setPointerCapture(e.pointerId);
+
 		dragging = true;
 
 		touchStartX = e.clientX;
 
-	});
+	});	
+	
+	card.addEventListener("pointermove", function(e){
 
+		if(!dragging) return;
+
+		const diff = e.clientX - touchStartX;
+
+		card.style.transform = `translateX(${diff * 0.6}px)`;
+
+	});
+	
 	card.addEventListener("pointerup", function(e){
-		
+
+		if(!dragging) return;
+
 		dragging = false;
 
 		touchEndX = e.clientX;
 
+		const diff = touchEndX - touchStartX;
+
+		// ลากไม่พอ
+		if(Math.abs(diff) < 25){
+
+			card.style.transition = "transform .2s ease";
+			card.style.transform = "translateX(0)";
+			card.releasePointerCapture(e.pointerId);
+			return;
+
+		}
+
 		handleSwipe();
 
 	});
-	
-	card.addEventListener("pointermove",function(e){
+
+	card.addEventListener("pointerleave", function(){
 
 		if(!dragging) return;
 
-		let diff = e.clientX-startX;
+		dragging = false;
 
-		card.style.transform = `translateX(${diff * 0.3}px)`;
+		card.style.transition = "transform .2s ease";
+		card.style.transform = "translateX(0)";
 
 	});
 

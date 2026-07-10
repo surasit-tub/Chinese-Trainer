@@ -301,29 +301,12 @@ function toggleDisplayMode(){
 
     const cardWrapper = document.querySelector(".card-wrapper");
     const tableWrapper = document.querySelector(".table-wrapper");
-    const icon = document.getElementById("displayModeIcon");
-	const autoIcon = document.getElementById("autoIcon");
-	const autoBtn = document.getElementById("autoBtn");
+    const icon = document.getElementById("displayModeIcon");	
 
     displayMode =
         displayMode === "card" ? "table" : "card";
 
-    if(displayMode === "table"){
-
-		// หยุด Auto ถ้ากำลังทำงาน
-		if(autoRunning){
-
-			autoRunning = false;
-
-			clearInterval(autoTimer);
-			autoTimer = null;
-
-			autoIcon.className = "fa-solid fa-play";
-			autoIcon.style.color = "";
-				
-		}
-	
-		autoBtn.style.visibility = "hidden";
+    if(displayMode === "table"){				
 	
         cardWrapper.style.display = "none";
         tableWrapper.style.display = "block";
@@ -332,9 +315,7 @@ function toggleDisplayMode(){
 		icon.className = "fa-solid fa-table";
 		icon.style.color = "#2196f3";
 
-    }else{
-		
-		autoBtn.style.visibility = "visible";
+    }else{		
 
         cardWrapper.style.display = "block";
         tableWrapper.style.display = "none";
@@ -508,7 +489,7 @@ function buildTable(){
 
     if(studyMode=="dialog"){
 
-        words.forEach(w=>{
+        words.forEach((w,i)=>{
 
             tbody.innerHTML += `
 						<tr>
@@ -521,6 +502,7 @@ function buildTable(){
 										<div class="dialog-cn">${w.c}</div>
 
 										<button class="speak-btn-table"
+												id="tableSpeakBtn${i}"
 												onclick="speakChineseText('${w.c}', this)">
 											<i class="fa-solid fa-volume-high"></i>
 										</button>
@@ -543,7 +525,7 @@ function buildTable(){
 
     }else{
 
-        words.forEach(w=>{
+        words.forEach((w,i) =>{
 
             tbody.innerHTML += `
 					<tr class="vocab-row">											
@@ -551,6 +533,7 @@ function buildTable(){
 						<td class="vocab-cn">${w.c}</td>
 						<td class="vocab-speaker">
 							<button class="speak-btn-table"
+									id="tableSpeakBtn${i}"
 									onclick="speakChineseText('${w.c}', this)">
 								<i class="fa-solid fa-volume-high"></i>
 							</button>
@@ -733,13 +716,16 @@ function nextWord() {
         cur = words[currentIndex];                
 
     }
+	// อัปเดต Card เฉพาะตอนอยู่หน้า Card
+	if(displayMode === "card"){
 	
-	if(autoShowAnswer){
-		answerVisible=true;
-		showAnswer();
-	}else{
-		answerVisible=false;
-		showQuestion();
+		if(autoShowAnswer){
+			answerVisible=true;
+			showAnswer();
+		}else{
+			answerVisible=false;
+			showQuestion();
+		}
 	}
 	
 	if(autoSpeak){
@@ -794,12 +780,16 @@ function previousWord(){
 
     }
 	
-	if(autoShowAnswer){
-		answerVisible=true;
-		showAnswer();
-	}else{
-		answerVisible=false;
-		showQuestion();
+	// อัปเดต Card เฉพาะตอนอยู่หน้า Card
+	if(displayMode === "card"){
+		
+		if(autoShowAnswer){
+			answerVisible=true;
+			showAnswer();
+		}else{
+			answerVisible=false;
+			showQuestion();
+		}
 	}
 
 	if(autoSpeak){
@@ -860,6 +850,36 @@ function animateCardSpeaker(){
 
 }
 
+function animateCurrentTableSpeaker(){	
+
+    let index;
+
+    if(shuffleMode){
+        index = randomIndex;
+    }else{
+        index = currentIndex;
+    }
+
+    const btn = document.getElementById("tableSpeakBtn" + index);
+
+    if(!btn) return;
+
+    btn.classList.add("pop");
+
+    setTimeout(()=>{
+        btn.classList.remove("pop");
+    },250);
+	
+	document.querySelectorAll("#wordTable tr")
+		.forEach(r => r.classList.remove("current-row"));
+
+	const row = btn.closest("tr");
+	if(row){
+		row.classList.add("current-row");
+	}
+
+}
+
 // =====================================================
 // Swipe
 // =====================================================
@@ -905,7 +925,11 @@ function speakChinese(){
 
     if(!cur) return;
 
-    animateCardSpeaker();
+	if(displayMode === "card"){
+		animateCardSpeaker();
+	} else {
+		animateCurrentTableSpeaker();
+	}
 
     const utter = new SpeechSynthesisUtterance(cur.c);
 

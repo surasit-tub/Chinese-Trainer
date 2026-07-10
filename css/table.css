@@ -1,0 +1,104 @@
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#1976d2;
+    color:white;
+    font-size:60px;
+    padding:10px;
+}
+
+td{
+    font-size:60px;
+    padding:10px;
+    border-bottom:1px solid #ddd;
+}
+
+tr:nth-child(even){
+    background:#f8f8f8;
+}
+
+.vocab-row td{
+    padding:8px 6px;
+    vertical-align:middle;
+}
+
+.vocab-cn{
+    width:25%;
+    font-size:80px;
+    color:#222;
+}
+
+.vocab-pinyin{
+    width:25%;
+    font-size:50px;
+    color:#666;
+}
+
+.vocab-read{
+    width:25%;
+    font-size:50px;
+    color:#1e88e5;      /* ฟ้า */
+}
+
+.vocab-th{
+    width:25%;
+    font-size:50px;
+    color:#d32f2f;      /* แดง */
+}
+
+.dialog-item{
+
+    padding:12px 0;
+
+}
+
+.dialog-cn{
+
+    font-size:80px;
+    color:#222;
+
+}
+
+.dialog-pinyin{
+
+    font-size:50px;
+    color:#666;
+    margin-top:4px;
+
+}
+
+.dialog-read{
+
+    font-size:50px;
+    color:#1e88e5;      /* ฟ้า */
+    margin-top:2px;
+
+}
+
+.dialog-th{
+
+    font-size:50px;
+    color:#d32f2f;      /* แดง */
+    margin-top:4px;
+
+}
+
+.dialog-title{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.dialog-title .dialog-cn{
+    margin:0;
+}
+
+#wordTable{
+
+    animation:fadeIn .2s;
+
+}

@@ -1,0 +1,46 @@
+body{font-family:Arial;max-width:900px;margin:20px auto;padding:10px}
+
+select{padding:8px 14px;margin:4px; font-size:80px;}
+
+.card-wrapper{
+    position:relative;
+	width:100%;
+}
+
+.table-wrapper {
+  overflow-y: auto;
+  border: 0px solid #ccc;
+  
+  display:none;
+}
+
+.word-line{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.answer-placeholder{
+
+    width:50%;
+    height:220px;
+
+    margin:20px auto;
+
+    border-radius:15px;
+
+    backdrop-filter:blur(8px);
+
+    background:
+        repeating-linear-gradient(
+            45deg,
+            #f4f4f4 0,
+            #f4f4f4 12px,
+            #ffffff 12px,
+            #ffffff 24px
+        );
+
+    border:0px solid #ddd;	
+
+}

@@ -1,0 +1,160 @@
+button{padding:8px 14px;margin:4px; font-size:80px;}
+
+.button-bar{
+    display:flex;
+
+    width:100%;
+
+    gap:8px;
+
+    margin-top:10px;
+	margin-bottom: 10px;
+}
+
+.button-bar button{
+
+    flex:1;
+
+    background:#fff;
+
+    border:1px solid #ddd;
+
+    transition:.2s;
+}
+
+.button-bar button:hover{
+
+    background:#e3f2fd;
+
+}
+
+.button-bar button:active{
+
+    transform:scale(.95);
+
+}
+
+
+.nav-btn{
+
+    position:absolute;
+
+    top:55%;
+    transform:translateY(-50%);
+
+    width:200px;
+    height:200px;
+
+	background:transparent;      /* โปร่งใส */	
+    color:#2196f3;      /* ฟ้า */
+
+	border-radius:50%;
+    border:10px solid #2196f3;
+
+    z-index:100;
+
+    opacity:.2;
+		
+}
+
+.nav-btn.left{
+    left:0px;
+}
+
+.nav-btn.right{
+    right:0px;
+}
+
+.nav-btn:hover{
+
+    transform:translateY(-50%) scale(1.1);
+
+}
+
+.nav-btn:active{
+
+    transform:translateY(-50%) scale(.92);
+
+}
+
+.card:hover .nav-btn{
+
+    opacity:1;
+    background:rgba(33,150,243,.15);
+
+}
+
+.speak-btn{
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    font-size:26px;
+    color:#1976d2;
+}
+
+.speak-btn:hover{
+    transform:scale(1.1);
+}
+
+
+.speak-btn i{
+	font-size: 60px;
+    color:#1976d2;
+}
+
+.speak-btn-table{
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 2px 6px;
+}
+
+.speak-btn-table i{
+    font-size: 60px;
+    color: #2196f3;
+}
+
+.speak-btn-table:hover i{
+    transform: scale(1.1);
+}
+
+/*
+#languageIcon{
+    transition: transform .25s ease;
+}
+
+#languageIcon.flip{
+    transform: scaleX(-1);
+}
+*/
+
+#languageText{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+
+    font-size:70px;
+    font-weight:bold;
+
+}
+
+#languageText .cn{
+
+    color:#d32f2f;
+
+}
+
+#languageText .th{
+
+    color:#1976d2;
+
+}
+
+#languageText .arrow{
+
+    font-size:50px;
+    color:#666;
+
+}

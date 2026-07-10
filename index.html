@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
 
-
 <script src="js/data_vocab.js"></script>
 <script src="js/data_dialog.js"></script>
 <script src="js/datasets.js"></script>
@@ -16,15 +15,31 @@
 
 <body>
 
-<select id="mode">
-<option value="ct">จีน→ไทย</option>
-<option value="tc">ไทย→จีน</option>
-</select>
+<div class="button-bar">
+<!--
+	<button id="languageBtn" onclick="toggleLanguage()">
+		<i id="languageIcon" class="fa-solid fa-language"></i>   
+		
+	</button>
+-->
 
-<select id="studyMode" onchange="changeStudyMode()">
-    <option value="vocab">คำศัพท์</option>
-    <option value="dialog">บทสนทนา</option>
-</select>
+<button id="languageBtn" onclick="toggleLanguage()">
+    <span id="languageText">
+        <span class="cn">文</span>
+        <span class="arrow">→</span>
+        <span class="th">ก</span>
+    </span>
+</button>
+	
+	<button id="studyModeBtn" onclick="toggleStudyMode()">
+		<i id="studyModeIcon" class="fa-solid fa-chalkboard"></i>
+	</button>
+	
+	<button id="speakerBtn" onclick="toggleSpeaker()">
+		<i id="speakerIcon" class="fa-solid fa-volume-xmark"></i>
+	</button>	
+
+</div>
 
 <select id="category" onchange="changeCategory()">		
 	</select>
@@ -32,22 +47,26 @@
 <select id="lesson" onchange="loadWords()">    
 	</select>
 
-<div class="button-bar">
-
+<div class="button-bar">	
+	
 	<button id="shuffleBtn" onclick="toggleShuffle()">
-    <i id="shuffleIcon" class="fa-solid fa-list-ol"></i>
-</button>
+		<i id="shuffleIcon" class="fa-solid fa-list-ol"></i>
+	</button>
 
 	<button id="answerModeBtn" onclick="toggleAnswerMode()">
 		<i id="answerModeIcon"
 		   class="fa-regular fa-closed-captioning"></i>
+	</button>	
+	
+	<button id="displayModeBtn" onclick="toggleDisplayMode()"> 
+		<i id="displayModeIcon" class="fa-solid fa-laptop-code"></i>
 	</button>
-
-	<button id="speakerBtn" onclick="toggleSpeaker()">
-		<i id="speakerIcon" class="fa-solid fa-volume-xmark"></i>
+	
+	<button id="autoBtn" onclick="toggleAuto()">
+		<i id="autoIcon" class="fa-solid fa-play"></i>
 	</button>
+	
 </div>
-<i class="fa-regular fa-closed-captioning"></i>
 
 <div class="card-wrapper">
 
@@ -60,25 +79,13 @@
 	<button class="nav-btn right" onclick="next()">
 		<i class="fa-solid fa-chevron-right"></i>
 	</button>
+	
+	<div class="button-bar">
+		<div class="info" id="info"></div>
+	</div>
 
 </div>
 
-<div class="button-bar">
-	<div class="info" id="info"></div>
-</div>
-
-
-<div class="button-bar">
-	<button class= "autoBtn" id="autoBtn" onclick="toggleAuto()">
-		<i id="autoIcon" class="fa-solid fa-play"></i>
-	</button>
-</div>
-
-<div class="button-bar">
-    <button class="show-table-btn" id="show-table-btn" onclick="showTable()"> 
-		<i class="fa-regular fa-folder-closed"></i>
-	</button>
-</div>
 
 <div class="table-wrapper">
 	<table id="wordTable">    

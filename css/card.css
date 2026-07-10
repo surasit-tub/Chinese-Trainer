@@ -1,0 +1,83 @@
+.info {
+	font-size:60px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.card{
+	position: relative;
+	
+	min-height:500px;
+	background:white;
+
+    border-radius:16px;
+
+    padding:25px;    
+	box-shadow:0 8px 20px rgba(0,0,0,.15);
+	
+	transition: all .2s ease;
+	
+	animation:fadeIn .2s;
+	
+}
+.card:hover{
+    box-shadow:0 12px 30px rgba(0,0,0,.2);
+}
+
+.card:active{
+    transform:scale(.98);
+}
+
+/* Vocab */
+.card.vocab{
+    text-align:center;
+}
+
+.card.vocab .chinese{
+    font-size:120px;
+}
+
+.card.vocab .pinyin{
+    font-size:70px;
+    color:#333;
+}
+
+.card.vocab .thaiRead{
+    font-size:60px;
+    color:#0066cc;
+}
+
+.card.vocab .meaning{
+    font-size:70px;
+    color:#cc0000;
+}
+
+/* Dialog */
+.card.dialog{
+    text-align:left !important;
+    padding:18px;
+    line-height:1.6;
+}
+
+.card.dialog{
+    font-size:28px;
+}
+
+.card.dialog .chinese{
+    font-size:120px;
+}
+
+.card.dialog .pinyin{
+    font-size:70px;
+    color:#333;
+}
+
+.card.dialog .thaiRead{
+    font-size:60px;
+    color:#0066cc;
+}
+
+.card.dialog .meaning{
+    font-size:70px;
+    color:#cc0000;
+}

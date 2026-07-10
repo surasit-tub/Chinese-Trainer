@@ -1,110 +1,246 @@
 console.log("app.js loaded");
 
+// =====================================================
+// Constants
+// =====================================================
+
 const SLIDE_DISTANCE = 30;
 
+// =====================================================
+// Display Modes
+// =====================================================
 
-let shuffleMode = false;
+let languageMode = "ct";      // ct / tc
+let studyMode    = "vocab";   // vocab / dialog
+let displayMode  = "card";    // card / table
 
-let studyMode = "vocab";
-let answerTimer = null;
+// =====================================================
+// Study Options
+// =====================================================
 
-let autoRunning = false;
-let speakerOn = false;
-
-let allLines = [];
-let currentIndex = 0;
-let words = [];
-let cur = null;
-
-let autoTimer = null;
-let autoMode = false;
-let tableVisible = false;
-let answerVisible = false;
-
+let shuffleMode    = false;
+let speakerOn      = false;
+let autoRunning    = false;
 let autoShowAnswer = false;
 
-let randomWords = [];
-let randomIndex = 0;
+// =====================================================
+// Current Lesson
+// =====================================================
+
+let allLines = [];
+let words    = [];
+let cur      = null;
+
+let currentIndex = 0;
+let randomWords  = [];
+let randomIndex  = 0;
+
+// =====================================================
+// Timers
+// =====================================================
+
+let autoTimer   = null;
+let answerTimer = null;
+
+// =====================================================
+// Card State
+// =====================================================
+
+let answerVisible = false;
+
+// =====================================================
+// Swipe / Drag
+// =====================================================
 
 let touchStartX = 0;
-let touchEndX = 0;
-let isSwiping = false;
-let dragging = false;
+let touchEndX   = 0;
+
+let dragging   = false;
+let isSwiping  = false;
 
 
-function handleSwipe(){
+// =====================================================
+// Init
+// =====================================================
 
-    const diff = touchEndX - touchStartX;
+function init() {
+    buildCategory();
+    changeCategory();
+	
+	const card = document.getElementById("card");
+	
+	card.addEventListener("pointerdown", function(e){
 
-    // ลากไม่ถึง
-    if(Math.abs(diff) < 50){
+		card.style.transition = "none";
+		//card.setPointerCapture(e.pointerId);
 
-        card.style.transition = "transform .2s ease";
-        card.style.transform = "translateX(0)";
-        return;
+		dragging = true;
 
+		touchStartX = e.clientX;
+
+	});	
+	
+	card.addEventListener("pointermove", function(e){
+
+		if(!dragging) return;
+
+		const diff = e.clientX - touchStartX;
+
+		card.style.transform = `translateX(${diff * 0.6}px)`;
+
+	});
+	
+	card.addEventListener("pointerup", function(e){
+
+		if(!dragging) return;
+
+		dragging = false;
+
+		touchEndX = e.clientX;
+
+		const diff = touchEndX - touchStartX;
+
+		// ลากไม่พอ
+		if(Math.abs(diff) < 25){
+
+			card.style.transition = "transform .2s ease";
+			card.style.transform = "translateX(0)";
+			//card.releasePointerCapture(e.pointerId);
+			return;
+
+		}
+
+		handleSwipe();
+
+	});
+
+	card.addEventListener("pointerleave", function(){
+
+		if(!dragging) return;
+
+		dragging = false;
+
+		card.style.transition = "transform .2s ease";
+		card.style.transform = "translateX(0)";
+
+	});
+
+}
+
+
+function buildCategory(){
+
+    const category = document.getElementById("category");
+
+    category.innerHTML = "";
+
+    Object.keys(datasets).forEach(name => {
+        category.innerHTML += `<option value="${name}">${name}</option>`;
+    });
+
+    // เลือกค่าเริ่มต้น
+    category.value = "เด็กเล็ก";
+}
+
+// =====================================================
+// Toggle Buttons
+// =====================================================
+/*
+function toggleLanguage(){
+
+    languageMode = (languageMode === "ct") ? "tc" : "ct";
+
+    animateButton("languageBtn");
+
+    const icon = document.getElementById("languageIcon");
+
+    if(languageMode === "ct"){
+		icon.classList.remove("flip");		
+        icon.style.color = "";
+
+    }else{
+		icon.classList.add("flip");
+		icon.style.color = "#1976d2";   // ฟ้า
+        
+    }	
+		
+
+    if(answerVisible){
+        showAnswer();
+    }else{
+        showQuestion();
     }
 
-    if(diff > 0){
+}
+*/
 
-        animateChange(function(){
+function toggleLanguage(){
 
-            previousWord();
+    languageMode =
+        languageMode === "ct"
+            ? "tc"
+            : "ct";
 
-        },"previous");
+    animateButton("languageBtn");
+
+    const text = document.getElementById("languageText");
+
+    if(languageMode === "ct"){
+
+        text.innerHTML = `
+            <span class="cn">文</span>
+            <span class="arrow">→</span>
+            <span class="th">ก</span>
+        `;
 
     }else{
 
-        animateChange(function(){
+        text.innerHTML = `
+            <span class="th">ก</span>
+            <span class="arrow">→</span>
+            <span class="cn">文</span>
+        `;
 
-            nextWord();
+    }
 
-        },"next");
-
+    if(answerVisible){
+        showAnswer();
+    }else{
+        showQuestion();
     }
 
 }
 
-function animateChange(callback, direction){
+function toggleStudyMode(){
 
-    const card = document.getElementById("card");
+    studyMode =
+        studyMode === "vocab"
+            ? "dialog"
+            : "vocab";
 
-    card.style.transition = "all .2s ease";
-    card.style.transform =
-        direction=="next"
-            ? `translateX(-${SLIDE_DISTANCE}px)`
-            : `translateX(${SLIDE_DISTANCE}px)`;
+    animateButton("studyModeBtn");
 
-    card.style.opacity = "0";
+    const icon = document.getElementById("studyModeIcon");
 
-    setTimeout(()=>{
+    if(studyMode === "vocab"){
 
-        callback();
+        icon.className = "fa-solid fa-chalkboard";
+		icon.style.color = "";
 
-        card.style.transform = "translateX(0)";
-        card.style.opacity = "1";
+    }else{
 
-    },200);
+        icon.className = "fa-regular fa-comments";
+		icon.style.color = "#1976d2";   // ฟ้า
 
-}
+    }
 
-function next(){
-
-    animateChange(() => {
-        nextWord();
-    }, "next");
-
-}
-
-function previous(){
-
-    animateChange(() => {
-        previousWord();
-    }, "previous");
+    changeCategory();
 
 }
 
 function toggleShuffle(){
+
+	animateButton("shuffleBtn");
 
     shuffleMode = !shuffleMode;
 
@@ -142,6 +278,8 @@ function toggleShuffle(){
 }
 
 function toggleAnswerMode(){
+	
+	animateButton("answerModeBtn");
 
     autoShowAnswer = !autoShowAnswer;
 
@@ -168,6 +306,8 @@ function toggleAnswerMode(){
 }
 
 function toggleSpeaker(){
+	
+	animateButton("speakerBtn");
 
     speakerOn = !speakerOn;
 
@@ -180,31 +320,115 @@ function toggleSpeaker(){
         icon.className = "fa-solid fa-volume-xmark";
 		icon.style.color = "";
     }
+		
+}
+
+function toggleDisplayMode(){
+
+    animateButton("displayModeBtn");
+
+    const cardWrapper = document.querySelector(".card-wrapper");
+    const tableWrapper = document.querySelector(".table-wrapper");
+    const icon = document.getElementById("displayModeIcon");
+	const autoIcon = document.getElementById("autoIcon");
+	const autoBtn = document.getElementById("autoBtn");
+
+    displayMode =
+        displayMode === "card" ? "table" : "card";
+
+    if(displayMode === "table"){
+
+		// หยุด Auto ถ้ากำลังทำงาน
+		if(autoRunning){
+
+			autoRunning = false;
+
+			clearInterval(autoTimer);
+			autoTimer = null;
+
+			autoIcon.className = "fa-solid fa-play";
+			autoIcon.style.color = "";
+				
+		}
 	
-	// Animation
-    speakerBtn.classList.add("pop");
+		autoBtn.style.visibility = "hidden";
+	
+        cardWrapper.style.display = "none";
+        tableWrapper.style.display = "block";
 
-    setTimeout(()=>{
-        speakerBtn.classList.remove("pop");
-    },250);
+        icon.className = "fa-solid fa-table-list";
+		icon.style.color = "#2196f3";
+
+    }else{
+		
+		autoBtn.style.visibility = "visible";
+
+        cardWrapper.style.display = "block";
+        tableWrapper.style.display = "none";
+
+        icon.className = "fa-solid fa-laptop-code";
+		icon.style.color = "";
+    }
 
 }
 
-function shuffle(array) {
+// =====================================================
+// Auto Play
+// =====================================================
 
-    return array
-        .map(value => ({ value, sort: Math.random() }))
-        .sort((a,b)=>a.sort-b.sort)
-        .map(({value})=>value);
+function toggleAuto(){
+	
+	animateButton("autoBtn");
+
+    autoRunning = !autoRunning;
+
+    const icon = document.getElementById("autoIcon");
+
+    if(autoRunning){
+
+        icon.className = "fa-solid fa-stop";
+		icon.style.color = "#2196f3";
+
+        autoPlay();
+
+        autoTimer = setInterval(autoPlay,5000);
+
+    }else{
+
+        icon.className = "fa-solid fa-play";
+		icon.style.color = "";
+
+        if(autoTimer){
+            clearInterval(autoTimer);
+            autoTimer = null;
+        }
+
+    }
 
 }
 
-function changeStudyMode(){
+function autoPlay() {
 
-    studyMode = document.getElementById("studyMode").value;
+    answerVisible = false;
+    nextWord();
+	
 
-    changeCategory(); // 🔥 สำคัญมาก ต้อง reload ใหม่
+    if(answerTimer){
+        clearTimeout(answerTimer);
+    }
+
+    answerTimer = setTimeout(function () {
+
+        answerVisible = true;
+        showAnswer();
+
+    }, 3000);
+
 }
+
+// =====================================================
+// Load Data
+// =====================================================
 
 function changeCategory(){
 
@@ -222,42 +446,6 @@ function changeCategory(){
 
     buildLesson();
     loadWords();
-}
-
-function buildCategory(){
-
-    const category = document.getElementById("category");
-
-    category.innerHTML = "";
-
-    Object.keys(datasets).forEach(name => {
-        category.innerHTML += `<option value="${name}">${name}</option>`;
-    });
-
-    // เลือกค่าเริ่มต้น
-    category.value = "เด็กเล็ก";
-}
-
-function buildLesson(){
-
-    const lesson = document.getElementById("lesson");
-
-    lesson.innerHTML = "";
-
-    const categoryName = document.getElementById("category").value;
-
-    datasets[categoryName].lessons.forEach((name,index)=>{
-
-        lesson.innerHTML += `
-            <option value="${index+1}">
-                ${name}
-            </option>
-        `;
-
-    });
-
-    lesson.value = "1";
-
 }
 
 function loadWords(){
@@ -312,29 +500,44 @@ function loadWords(){
     } else {
         showQuestion();
     }
-		
-	
-	const tbody = document.querySelector("#wordTable tbody");
-	tbody.innerHTML = "";
-	tableVisible  = true;
-	const showTableBtn = document.getElementById("show-table-btn");
-	showTableBtn.innerHTML = '<i class="fa-regular fa-folder-closed"></i>';
+				
+	buildTable();
 }
 
-function showTable() {
 
-	const showTableBtn = document.getElementById("show-table-btn");
+function buildLesson(){
+
+    const lesson = document.getElementById("lesson");
+
+    lesson.innerHTML = "";
+
+    const categoryName = document.getElementById("category").value;
+
+    datasets[categoryName].lessons.forEach((name,index)=>{
+
+        lesson.innerHTML += `
+            <option value="${index+1}">
+                ${name}
+            </option>
+        `;
+
+    });
+
+    lesson.value = "1";
+
+}
+
+function buildTable(){
+
     const tbody = document.querySelector("#wordTable tbody");
 
     tbody.innerHTML = "";
 
-	if(tableVisible  == true) {		
+    if(studyMode=="dialog"){
 
-		if(studyMode=="dialog"){
+        words.forEach(w=>{
 
-			words.forEach((w, i) => {
-	
-					tbody.innerHTML += `
+            tbody.innerHTML += `
 						<tr>
 							<td>
 
@@ -363,12 +566,13 @@ function showTable() {
 						</tr>
 				`;
 
-			});
-		}else{
+        });
 
-			words.forEach(w=>{
+    }else{
 
-				tbody.innerHTML += `
+        words.forEach(w=>{
+
+            tbody.innerHTML += `
 					<tr class="vocab-row">											
 							
 						<td class="vocab-cn">${w.c}</td>
@@ -384,66 +588,134 @@ function showTable() {
 					</tr>
 				`;
 
-			});
-
-		}
-						
-		tableVisible  = false;
-		showTableBtn.innerHTML = '<i class="fa-regular fa-folder-open"></i></i>';		
-		
-	}
-	else {
-		tableVisible  = true;
-		showTableBtn.innerHTML = '<i class="fa-regular fa-folder-closed"></i></i>';
-	}
-}
-
-function toggleAuto(){
-
-    autoRunning = !autoRunning;
-
-    const icon = document.getElementById("autoIcon");
-
-    if(autoRunning){
-
-        icon.className = "fa-solid fa-stop";
-
-        autoPlay();
-
-        autoTimer = setInterval(autoPlay,5000);
-
-    }else{
-
-        icon.className = "fa-solid fa-play";
-
-        if(autoTimer){
-            clearInterval(autoTimer);
-            autoTimer = null;
-        }
+        });
 
     }
 
 }
 
-function autoPlay() {
+// =====================================================
+// Card
+// =====================================================
 
-    answerVisible = false;
-    nextWord();
+function showQuestion() {
+
+    applyCardStyle();
+
+    card.innerHTML = `
+			<div class="word-line">
+				<div class="chinese">
+					${languageMode =="ct" ? cur.c : cur.t}
+				</div>
+
+				<button class="speak-btn"
+					onclick="event.stopPropagation(); speakChinese();">
+					<i class="fa-solid fa-volume-high"></i>
+				</button>
+			</div>
+			
+			<div class="answer-placeholder" onclick="showAns()">
+				<div class="reveal-text"></div>
+			</div>
+		`;
+}
+function showAnswer() {
+
+    applyCardStyle();
+
+    if (languageMode  == "ct") {
+
+			card.innerHTML = `
+				<div class="word-line">
+
+					<div class="chinese">${cur.c}</div>
+
+					<button class="speak-btn"
+						onclick="event.stopPropagation(); speakChinese();">
+						<i class="fa-solid fa-volume-high"></i>
+					</button>
+
+				</div>
+				<div onclick="showAns()">
+					<div class="pinyin">${cur.p}</div>
+					<div class="thaiRead">${cur.r}</div>
+					<div class="meaning">${cur.t}</div>
+				</div>
+				
+			`;
+        
+
+    } else {
+
+
+			card.innerHTML = `
+				<div class="word-line">
+
+					<div class="chinese">${cur.t}</div>
+
+					<button class="speak-btn"
+						onclick="event.stopPropagation(); speakChinese();">
+						<i class="fa-solid fa-volume-high"></i>
+					</button>
+
+				</div>
+				<div onclick="showAns()">
+					<div class="pinyin">${cur.r}</div>
+					<div class="thaiRead">${cur.p}</div>
+					<div class="meaning">${cur.c}</div>
+				</div>
+			`;        
+
+    }
+}
+
+
+function showAns() {
+
+	if(isSwiping){
+
+        isSwiping = false;
+        return;
+
+    }
 	
+    if (!cur) return;
 
-    if(answerTimer){
-        clearTimeout(answerTimer);
-    }
+    answerVisible = !answerVisible;
 
-    answerTimer = setTimeout(function () {
-
-        answerVisible = true;
+    if (answerVisible)
         showAnswer();
+    else
+        showQuestion();
+}
 
-    }, 3000);
+function applyCardStyle(){
+    
+    const card = document.getElementById("card");
+
+    card.classList.remove("vocab","dialog");
+    card.classList.add(studyMode);
+}
+
+// =====================================================
+// Navigation
+// =====================================================
+
+function next(){
+
+    animateChange(() => {
+        nextWord();
+    }, "next");
 
 }
 
+function previous(){
+
+    animateChange(() => {
+        previousWord();
+    }, "previous");
+
+}
 
 function nextWord() {
 	
@@ -562,122 +834,85 @@ function previousWord(){
 	}
 }
 
+// =====================================================
+// Animation
+// =====================================================
 
-function showQuestion() {
+function animateButton(id){
 
-    applyCardStyle();
+    const btn = document.getElementById(id);
 
-    const modeSelect = document.getElementById("mode").value;
-
-    card.innerHTML = `
-			<div class="word-line">
-				<div class="chinese">
-					${modeSelect=="ct" ? cur.c : cur.t}
-				</div>
-
-				<button class="speak-btn"
-					onclick="event.stopPropagation(); speakChinese();">
-					<i class="fa-solid fa-volume-high"></i>
-				</button>
-			</div>
-			
-			<div class="answer-placeholder" onclick="showAns()">
-				<div class="reveal-text"></div>
-			</div>
-		`;
-}
-function showAnswer() {
-
-    applyCardStyle();
-
-    const modeSelect = document.getElementById("mode").value;
-
-    if (modeSelect == "ct") {
-
-			card.innerHTML = `
-				<div class="word-line">
-
-					<div class="chinese">${cur.c}</div>
-
-					<button class="speak-btn"
-						onclick="event.stopPropagation(); speakChinese();">
-						<i class="fa-solid fa-volume-high"></i>
-					</button>
-
-				</div>
-				<div onclick="showAns()">
-					<div class="pinyin">${cur.p}</div>
-					<div class="thaiRead">${cur.r}</div>
-					<div class="meaning">${cur.t}</div>
-				</div>
-				
-			`;
-        
-
-    } else {
-
-
-			card.innerHTML = `
-				<div class="word-line">
-
-					<div class="chinese">${cur.t}</div>
-
-					<button class="speak-btn"
-						onclick="event.stopPropagation(); speakChinese();">
-						<i class="fa-solid fa-volume-high"></i>
-					</button>
-
-				</div>
-				<div onclick="showAns()">
-					<div class="pinyin">${cur.c}</div>
-					<div class="thaiRead">${cur.p}</div>
-					<div class="meaning">${cur.r}</div>
-				</div>
-			`;        
-
-    }
-}
-
-
-function showAns() {
-
-	if(isSwiping){
-
-        isSwiping = false;
-        return;
-
-    }
-	
-    if (!cur) return;
-
-    answerVisible = !answerVisible;
-
-    if (answerVisible)
-        showAnswer();
-    else
-        showQuestion();
-}
-
-function applyCardStyle(){
-
-    const studyMode = document.getElementById("studyMode").value;
-    const card = document.getElementById("card");
-
-    card.classList.remove("vocab","dialog");
-    card.classList.add(studyMode);
-}
-
-function animateSpeaker(){
-
-    const speakerBtn = document.getElementById("speakerBtn");
-
-    speakerBtn.classList.add("pop");
+    btn.classList.add("pop");
 
     setTimeout(()=>{
-        speakerBtn.classList.remove("pop");
+        btn.classList.remove("pop");
     },250);
 
 }
+
+function animateChange(callback, direction){
+
+    const card = document.getElementById("card");
+
+    card.style.transition = "all .2s ease";
+    card.style.transform =
+        direction=="next"
+            ? `translateX(-${SLIDE_DISTANCE}px)`
+            : `translateX(${SLIDE_DISTANCE}px)`;
+
+    card.style.opacity = "0";
+
+    setTimeout(()=>{
+
+        callback();
+
+        card.style.transform = "translateX(0)";
+        card.style.opacity = "1";
+
+    },200);
+
+}
+
+// =====================================================
+// Swipe
+// =====================================================
+
+function handleSwipe(){
+
+    const diff = touchEndX - touchStartX;
+
+    // ลากไม่ถึง
+    if(Math.abs(diff) < 50){
+
+        card.style.transition = "transform .2s ease";
+        card.style.transform = "translateX(0)";
+        return;
+
+    }
+
+    if(diff > 0){
+
+        animateChange(function(){
+
+            previousWord();
+
+        },"previous");
+
+    }else{
+
+        animateChange(function(){
+
+            nextWord();
+
+        },"next");
+
+    }
+
+}
+
+// =====================================================
+// Speaker
+// =====================================================
 
 function speakChinese(){
 
@@ -711,69 +946,38 @@ function speakChineseText(text){
 
 }
 
+// =====================================================
+// Utils
+// =====================================================
 
-function init() {
-    buildCategory();
-    changeCategory();
-	
-	const card = document.getElementById("card");
-	
-	card.addEventListener("pointerdown", function(e){
+function shuffle(array) {
 
-		card.style.transition = "none";
-		//card.setPointerCapture(e.pointerId);
-
-		dragging = true;
-
-		touchStartX = e.clientX;
-
-	});	
-	
-	card.addEventListener("pointermove", function(e){
-
-		if(!dragging) return;
-
-		const diff = e.clientX - touchStartX;
-
-		card.style.transform = `translateX(${diff * 0.6}px)`;
-
-	});
-	
-	card.addEventListener("pointerup", function(e){
-
-		if(!dragging) return;
-
-		dragging = false;
-
-		touchEndX = e.clientX;
-
-		const diff = touchEndX - touchStartX;
-
-		// ลากไม่พอ
-		if(Math.abs(diff) < 25){
-
-			card.style.transition = "transform .2s ease";
-			card.style.transform = "translateX(0)";
-			//card.releasePointerCapture(e.pointerId);
-			return;
-
-		}
-
-		handleSwipe();
-
-	});
-
-	card.addEventListener("pointerleave", function(){
-
-		if(!dragging) return;
-
-		dragging = false;
-
-		card.style.transition = "transform .2s ease";
-		card.style.transform = "translateX(0)";
-
-	});
+    return array
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a,b)=>a.sort-b.sort)
+        .map(({value})=>value);
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

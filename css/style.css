@@ -248,18 +248,20 @@ button:active{
 
     position:absolute;
 
-    top:50%;
+    top:75%;
     transform:translateY(-50%);
 
     width:200px;
-    height:400px;
+    height:200px;
 
-    /*border-radius:50%;*/
+	background:transparent;      /* โปร่งใส */
+    color:#2196f3;      /* ฟ้า */
+
     border:none;
 
     z-index:100;
 
-    opacity:.1;
+    opacity:.2;
 }
 
 .nav-btn.left{
@@ -352,7 +354,7 @@ button:active{
 
 .answer-placeholder{
 
-    width:80%;
+    width:50%;
     height:220px;
 
     margin:20px auto;

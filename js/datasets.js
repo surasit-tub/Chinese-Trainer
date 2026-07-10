@@ -86,7 +86,7 @@ const datasets = {
         ]
     },
 
-    "การทำงานและออฟฟิศ": {
+    "การทำงาน/ออฟฟิศ": {
         vocab: vocab6,
 		dialog: dialog6,
         lessons: [
@@ -103,7 +103,7 @@ const datasets = {
         ]
     },
 
-    "เสื้อผ้าและร่างกาย": {
+    "เสื้อผ้า/ร่างกาย": {
         vocab: vocab7,
 		dialog: dialog7,
         lessons: [
@@ -120,7 +120,7 @@ const datasets = {
         ]
     },
 
-    "สุขภาพและโรงพยาบาล": {
+    "สุขภาพ/โรงพยาบาล": {
         vocab: vocab8,
 		dialog: dialog8,
         lessons: [
@@ -137,7 +137,7 @@ const datasets = {
         ]
     },
 
-    "ธรรมชาติและโลกรอบตัว": {
+    "ธรรมชาติ/โลกรอบตัว": {
         vocab: vocab9,
 		dialog: dialog9,
         lessons: [

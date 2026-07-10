@@ -2,6 +2,9 @@ console.log("app.js loaded");
 
 const SLIDE_DISTANCE = 30;
 
+
+let shuffleMode = false;
+
 let studyMode = "vocab";
 let answerTimer = null;
 
@@ -101,6 +104,43 @@ function previous(){
 
 }
 
+function toggleShuffle(){
+
+    shuffleMode = !shuffleMode;
+
+    const icon = document.getElementById("shuffleIcon");
+
+    if(shuffleMode){
+
+		icon.className = "fa-solid fa-shuffle";
+        icon.style.color = "#2196f3";
+
+        randomWords = shuffle([...words]);
+        randomIndex = 0;
+
+        cur = randomWords[randomIndex];
+
+        document.getElementById("info").innerHTML =
+            `${randomIndex+1} / ${words.length}`;
+
+    }else{
+
+		icon.className = "fa-solid fa-list-ol";
+        icon.style.color = "";
+
+        currentIndex = 0;
+
+        cur = words[currentIndex];
+
+        document.getElementById("info").innerHTML =
+            `${currentIndex+1} / ${words.length}`;
+
+    }
+
+    showQuestion();
+
+}
+
 function toggleAnswerMode(){
 
     autoShowAnswer = !autoShowAnswer;
@@ -110,6 +150,7 @@ function toggleAnswerMode(){
     if(autoShowAnswer){
 
         icon.className="fa-solid fa-closed-captioning";
+		icon.style.color = "#2196f3";
 
         answerVisible=true;
         showAnswer();
@@ -117,6 +158,7 @@ function toggleAnswerMode(){
     }else{
 
         icon.className="fa-regular fa-closed-captioning";
+		icon.style.color = "";
 
         answerVisible=false;
         showQuestion();
@@ -133,8 +175,10 @@ function toggleSpeaker(){
 
     if(speakerOn){
         icon.className = "fa-solid fa-volume-high";
+		icon.style.color = "#2196f3";
     }else{
         icon.className = "fa-solid fa-volume-xmark";
+		icon.style.color = "";
     }
 	
 	// Animation
@@ -154,36 +198,6 @@ function shuffle(array) {
         .map(({value})=>value);
 
 }
-
-function changeNextMode(){
-
-    const nextMode = document.getElementById("nextMode").value;
-
-    answerVisible = false;
-
-    if(nextMode === "random"){
-
-        randomWords = shuffle([...words]);
-        randomIndex = 0;
-
-        cur = randomWords[randomIndex];
-
-        document.getElementById("info").innerHTML =
-            `${randomIndex + 1} / ${words.length}`;
-
-    }else{
-
-        currentIndex = 0;
-
-        cur = words[currentIndex];
-
-        document.getElementById("info").innerHTML =
-            `${currentIndex + 1} / ${words.length}`;
-    }
-
-    showQuestion();
-}
-
 
 function changeStudyMode(){
 
@@ -280,12 +294,10 @@ function loadWords(){
 		}}
 	);
 
-
 	currentIndex = 0;
-	cur = null;
-		
-	let nextMode = document.getElementById("nextMode").value;
-	if(nextMode=="random"){
+	cur = null;		
+	
+	if(shuffleMode){
 		document.getElementById("info").innerHTML =
         `${randomIndex + 1} / ${words.length}`;
 		cur = randomWords[randomIndex];
@@ -435,11 +447,9 @@ function autoPlay() {
 
 function nextWord() {
 	
-	console.log(currentIndex);
+	console.log(currentIndex);    
 
-    let nextMode = document.getElementById("nextMode").value;
-
-    if(nextMode=="random"){
+    if(shuffleMode){
 		
 		randomIndex++;
 
@@ -496,10 +506,8 @@ function nextWord() {
 function previousWord(){
 	
 	console.log(currentIndex);
-
-    let nextMode = document.getElementById("nextMode").value;
-
-    if(nextMode=="random"){
+    
+    if(shuffleMode){
 		
 		randomIndex--;		
 		// ครบ 10 คำ ให้เตรียมสุ่มรอบใหม่

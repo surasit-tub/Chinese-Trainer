@@ -17,18 +17,13 @@
 <body>
 
 <select id="mode">
-<option value="ct">CN→TH</option>
-<option value="tc">TH→CN</option>
-</select>
-
-<select id="nextMode" onchange="changeNextMode()">
-    <option value="seq">Seq</option>
-    <option value="random">Shuffle</option>
+<option value="ct">จีน→ไทย</option>
+<option value="tc">ไทย→จีน</option>
 </select>
 
 <select id="studyMode" onchange="changeStudyMode()">
-    <option value="vocab">Vocab</option>
-    <option value="dialog">Dialog</option>
+    <option value="vocab">คำศัพท์</option>
+    <option value="dialog">บทสนทนา</option>
 </select>
 
 <select id="category" onchange="changeCategory()">		
@@ -38,6 +33,11 @@
 	</select>
 
 <div class="button-bar">
+
+	<button id="shuffleBtn" onclick="toggleShuffle()">
+    <i id="shuffleIcon" class="fa-solid fa-list-ol"></i>
+</button>
+
 	<button id="answerModeBtn" onclick="toggleAnswerMode()">
 		<i id="answerModeIcon"
 		   class="fa-regular fa-closed-captioning"></i>

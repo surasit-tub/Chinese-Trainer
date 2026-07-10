@@ -356,7 +356,8 @@ function toggleDisplayMode(){
         cardWrapper.style.display = "none";
         tableWrapper.style.display = "block";
 
-        icon.className = "fa-solid fa-table-list";
+        //icon.className = "fa-solid fa-table-list";
+		icon.className = "fa-solid fa-table";
 		icon.style.color = "#2196f3";
 
     }else{

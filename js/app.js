@@ -19,7 +19,7 @@ let displayMode  = "card";    // card / table
 // =====================================================
 
 let shuffleMode    = false;
-let speakerOn      = false;
+let autoSpeak      = false;
 let autoRunning    = false;
 let autoShowAnswer = false;
 
@@ -145,34 +145,6 @@ function buildCategory(){
 // =====================================================
 // Toggle Buttons
 // =====================================================
-/*
-function toggleLanguage(){
-
-    languageMode = (languageMode === "ct") ? "tc" : "ct";
-
-    animateButton("languageBtn");
-
-    const icon = document.getElementById("languageIcon");
-
-    if(languageMode === "ct"){
-		icon.classList.remove("flip");		
-        icon.style.color = "";
-
-    }else{
-		icon.classList.add("flip");
-		icon.style.color = "#1976d2";   // ฟ้า
-        
-    }	
-		
-
-    if(answerVisible){
-        showAnswer();
-    }else{
-        showQuestion();
-    }
-
-}
-*/
 
 function toggleLanguage(){
 
@@ -307,13 +279,13 @@ function toggleAnswerMode(){
 
 function toggleSpeaker(){
 	
+	autoSpeak = !autoSpeak;
+	
 	animateButton("speakerBtn");
-
-    speakerOn = !speakerOn;
-
+    
     const icon = document.getElementById("speakerIcon");
 
-    if(speakerOn){
+    if(autoSpeak){
         icon.className = "fa-solid fa-volume-high";
 		icon.style.color = "#2196f3";
     }else{
@@ -549,7 +521,7 @@ function buildTable(){
 										<div class="dialog-cn">${w.c}</div>
 
 										<button class="speak-btn-table"
-												onclick="speakChineseText('${w.c}')">
+												onclick="speakChineseText('${w.c}', this)">
 											<i class="fa-solid fa-volume-high"></i>
 										</button>
 
@@ -579,7 +551,7 @@ function buildTable(){
 						<td class="vocab-cn">${w.c}</td>
 						<td class="vocab-speaker">
 							<button class="speak-btn-table"
-									onclick="speakChineseText('${w.c}')">
+									onclick="speakChineseText('${w.c}', this)">
 								<i class="fa-solid fa-volume-high"></i>
 							</button>
 						</td>
@@ -609,7 +581,7 @@ function showQuestion() {
 					${languageMode =="ct" ? cur.c : cur.t}
 				</div>
 
-				<button class="speak-btn"
+				<button id="cardSpeakBtn" class="speak-btn"
 					onclick="event.stopPropagation(); speakChinese();">
 					<i class="fa-solid fa-volume-high"></i>
 				</button>
@@ -631,7 +603,7 @@ function showAnswer() {
 
 					<div class="chinese">${cur.c}</div>
 
-					<button class="speak-btn"
+					<button id="cardSpeakBtn" class="speak-btn"
 						onclick="event.stopPropagation(); speakChinese();">
 						<i class="fa-solid fa-volume-high"></i>
 					</button>
@@ -770,7 +742,7 @@ function nextWord() {
 		showQuestion();
 	}
 	
-	if(speakerOn){
+	if(autoSpeak){
 		speakChinese();
 	}		
 		
@@ -830,7 +802,7 @@ function previousWord(){
 		showQuestion();
 	}
 
-	if(speakerOn){
+	if(autoSpeak){
 		speakChinese();
 	}
 }
@@ -871,6 +843,20 @@ function animateChange(callback, direction){
         card.style.opacity = "1";
 
     },200);
+
+}
+
+function animateCardSpeaker(){
+
+    const btn = document.getElementById("cardSpeakBtn");
+
+    if(!btn) return;
+
+    btn.classList.add("pop");
+
+    setTimeout(()=>{
+        btn.classList.remove("pop");
+    },250);
 
 }
 
@@ -917,9 +903,9 @@ function handleSwipe(){
 
 function speakChinese(){
 
-    if(!cur || !speakerOn) return;
+    if(!cur) return;
 
-    animateButton("speakerBtn");
+    animateCardSpeaker();
 
     const utter = new SpeechSynthesisUtterance(cur.c);
 
@@ -931,11 +917,13 @@ function speakChinese(){
 
 }
 
-function speakChineseText(text){
+function speakChineseText(text, btn){	
 
-	if(!speakerOn) return;
+	btn.classList.add("pop");
 
-    animateButton("speakerBtn");
+    setTimeout(()=>{
+        btn.classList.remove("pop");
+    },250);
 	
     const utter = new SpeechSynthesisUtterance(text);
 

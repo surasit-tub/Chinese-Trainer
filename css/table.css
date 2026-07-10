@@ -20,13 +20,8 @@ tr:nth-child(even){
     background:#f8f8f8;
 }
 
-.current-row{
-    background:#e3f2fd !important;
-    transition:.2s;
-}
-
 .active-row {
-    background-color: #fff3cd;
+    background-color: #e3f2fd !important;
     transition: background-color 0.3s;
 }
 

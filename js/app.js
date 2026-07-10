@@ -679,6 +679,8 @@ function nextWord() {
 
     if(shuffleMode){
 		
+		highlightCurrentRow(randomIndex);
+		
 		randomIndex++;
 
         // ครบ 10 คำ ให้เตรียมสุ่มรอบใหม่
@@ -701,9 +703,10 @@ function nextWord() {
         `${randomIndex + 1} / ${words.length}`;
 		
         cur = randomWords[randomIndex];
-
-                
+		                
     }else{
+		
+		highlightCurrentRow(currentIndex);
 
 		currentIndex++;
 		
@@ -713,7 +716,7 @@ function nextWord() {
 		document.getElementById("info").innerHTML =
 		`${currentIndex + 1} / ${words.length}`;
 	
-        cur = words[currentIndex];                
+        cur = words[currentIndex];       				
 
     }
 	// อัปเดต Card เฉพาะตอนอยู่หน้า Card
@@ -730,7 +733,8 @@ function nextWord() {
 	
 	if(autoSpeak){
 		speakChinese();
-	}		
+	}			
+	
 		
 }
 
@@ -850,34 +854,22 @@ function animateCardSpeaker(){
 
 }
 
-function animateCurrentTableSpeaker(){	
+function highlightCurrentRow(index){
 
-    let index;
+    const rows = document.querySelectorAll("#wordTable tbody tr");
 
-    if(shuffleMode){
-        index = randomIndex;
-    }else{
-        index = currentIndex;
+    rows.forEach(row => {
+        row.classList.remove("active-row");
+    });
+
+    if(rows[index]){
+        rows[index].classList.add("active-row");
+
+        rows[index].scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
     }
-
-    const btn = document.getElementById("tableSpeakBtn" + index);
-
-    if(!btn) return;
-
-    btn.classList.add("pop");
-
-    setTimeout(()=>{
-        btn.classList.remove("pop");
-    },250);
-	
-	document.querySelectorAll("#wordTable tr")
-		.forEach(r => r.classList.remove("current-row"));
-
-	const row = btn.closest("tr");
-	if(row){
-		row.classList.add("current-row");
-	}
-
 }
 
 // =====================================================
@@ -927,9 +919,7 @@ function speakChinese(){
 
 	if(displayMode === "card"){
 		animateCardSpeaker();
-	} else {
-		animateCurrentTableSpeaker();
-	}
+	} 
 
     const utter = new SpeechSynthesisUtterance(cur.c);
 

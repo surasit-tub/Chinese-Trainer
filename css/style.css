@@ -254,14 +254,16 @@ button:active{
     width:200px;
     height:200px;
 
-	background:transparent;      /* โปร่งใส */
+	background:transparent;      /* โปร่งใส */	
     color:#2196f3;      /* ฟ้า */
 
+	border-radius:50%;
     border:none;
 
     z-index:100;
 
     opacity:.2;
+		
 }
 
 .nav-btn.left{
@@ -281,6 +283,7 @@ button:active{
 .card:hover .nav-btn{
 
     opacity:1;
+	background:rgba(33,150,243,.15);
 
 }
 

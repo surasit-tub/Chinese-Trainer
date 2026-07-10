@@ -919,7 +919,7 @@ function speakChinese(){
 
     if(!cur || !speakerOn) return;
 
-    animateSpeaker();
+    animateButton("speakerBtn");
 
     const utter = new SpeechSynthesisUtterance(cur.c);
 
@@ -935,7 +935,7 @@ function speakChineseText(text){
 
 	if(!speakerOn) return;
 
-    animateSpeaker();
+    animateButton("speakerBtn");
 	
     const utter = new SpeechSynthesisUtterance(text);
 

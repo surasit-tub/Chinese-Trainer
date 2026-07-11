@@ -38,9 +38,12 @@
 	<button id="studyModeBtn" onclick="toggleStudyMode()">
 		<i id="studyModeIcon" class="fa-solid fa-chalkboard"></i>
 	</button>
-	
+
 	<button id="speakerBtn" onclick="toggleSpeaker()">
-		<i id="speakerIcon" class="fa-solid fa-volume-xmark"></i>
+		<span class="fa-stack">
+			<i class="fa-solid fa-volume-high fa-stack-1x"></i>
+			<i id="speakerSlash" class="fa-solid fa-slash fa-stack-1x hidden"></i>
+		</span>
 	</button>	
 
 </div>
@@ -61,10 +64,19 @@
 		<i id="shuffleIcon" class="fa-solid fa-list-ol"></i>
 	</button>
 
+<!--
 	<button id="answerModeBtn" onclick="toggleAnswerMode()">
-		<i id="answerModeIcon"
-		   class="fa-regular fa-closed-captioning"></i>
-	</button>	
+		<i id="answerModeIcon" class="fa-solid fa-closed-captioning"></i>
+	</button>		
+-->	
+
+	<button id="answerModeBtn" onclick="toggleAnswerMode()">
+		<span class="fa-stack">
+			<i class="fa-regular fa-closed-captioning fa-stack-1x"></i>
+			<i id="answerSlash" class="fa-solid fa-slash fa-stack-1x hidden"></i>
+		</span>
+	</button>
+	
 	
 	<button id="displayModeBtn" onclick="toggleDisplayMode()"> 
 		<i id="displayModeIcon" class="fa-solid fa-laptop-code"></i>

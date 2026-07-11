@@ -4,4 +4,6 @@
 @import url("table.css");
 @import url("animation.css");
 
-
+.hidden{
+    display:none;
+}

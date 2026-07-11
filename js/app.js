@@ -19,9 +19,9 @@ let displayMode  = "card";    // card / table
 // =====================================================
 
 let shuffleMode    = false;
-let autoSpeak      = false;
+let autoSpeak      = true;
 let autoRunning    = false;
-let autoShowAnswer = false;
+let autoShowAnswer = true;
 
 // =====================================================
 // Current Lesson
@@ -46,7 +46,7 @@ let answerTimer = null;
 // Card State
 // =====================================================
 
-let answerVisible = false;
+let answerVisible = true;
 
 // =====================================================
 // Swipe / Drag
@@ -256,19 +256,19 @@ function toggleAnswerMode(){
     autoShowAnswer = !autoShowAnswer;
 
     const icon=document.getElementById("answerModeIcon");
+	const slash = document.getElementById("answerSlash");
 
     if(autoShowAnswer){
 
-        icon.className="fa-solid fa-closed-captioning";
-		icon.style.color = "#2196f3";
+		slash.classList.add("hidden");
 
         answerVisible=true;
         showAnswer();
 
     }else{
 
-        icon.className="fa-regular fa-closed-captioning";
-		icon.style.color = "";
+		slash.classList.remove("hidden");
+		slash.style.color = "#d32f2f";
 
         answerVisible=false;
         showQuestion();
@@ -283,14 +283,14 @@ function toggleSpeaker(){
 	
 	animateButton("speakerBtn");
     
-    const icon = document.getElementById("speakerIcon");
+	const slash = document.getElementById("speakerSlash");
 
     if(autoSpeak){
-        icon.className = "fa-solid fa-volume-high";
-		icon.style.color = "#2196f3";
+		slash.classList.add("hidden");
+		
     }else{
-        icon.className = "fa-solid fa-volume-xmark";
-		icon.style.color = "";
+		slash.classList.remove("hidden");
+		slash.style.color = "#d32f2f";
     }
 		
 }
@@ -363,20 +363,29 @@ function toggleAuto(){
 
 function autoPlay() {
 
-    answerVisible = false;
-    nextWord();
-	
+    showCurrentWord();
 
-    if(answerTimer){
-        clearTimeout(answerTimer);
+    if(autoShowAnswer){
+
+        showCurrentAnswer();
+
+        playCurrentWord(function(){
+
+            nextWord();
+
+        });
+
+    }else{
+
+        playCurrentWord(function(){
+
+            showCurrentAnswer();
+
+            nextWord();
+
+        });
+
     }
-
-    answerTimer = setTimeout(function () {
-
-        answerVisible = true;
-        showAnswer();
-
-    }, 3000);
 
 }
 
@@ -657,11 +666,62 @@ function applyCardStyle(){
 // Navigation
 // =====================================================
 
+function showCurrentWord(){
+
+    if(displayMode == "card"){
+
+        answerVisible = false;
+        showQuestion();
+
+    }else{
+
+        const index = shuffleMode ? randomIndex : currentIndex;
+        highlightCurrentRow(index);
+
+    }
+
+}
+
+function showCurrentAnswer(){
+
+    if(displayMode=="card"){
+
+        showAnswer();
+
+    }
+
+}
+
+
+
+function playCurrentWord(callback){
+
+    if(!autoSpeak){
+
+        if(callback) callback();
+        return;
+
+    }
+
+    speakChinese(callback);
+
+}
+
 function next(){
 
     animateChange(() => {
         nextWord();
-    }, "next");
+		showCurrentWord();
+		
+		if(autoSpeak){
+			playCurrentWord();
+		}
+		
+		if(autoShowAnswer){
+			showCurrentAnswer();
+		}		
+	
+    }, "next");	
 
 }
 
@@ -669,7 +729,19 @@ function previous(){
 
     animateChange(() => {
         previousWord();
+		showCurrentWord();
+		
+		if(autoSpeak){
+			playCurrentWord();
+		}
+		if(autoShowAnswer){
+			showCurrentAnswer();
+		}
+		
+	
     }, "previous");
+	
+	
 
 }
 
@@ -677,9 +749,7 @@ function nextWord() {
 	
 	console.log(currentIndex);    
 
-    if(shuffleMode){
-		
-		highlightCurrentRow(randomIndex);
+    if(shuffleMode){			
 		
 		randomIndex++;
 
@@ -702,11 +772,9 @@ function nextWord() {
 		document.getElementById("info").innerHTML =
         `${randomIndex + 1} / ${words.length}`;
 		
-        cur = randomWords[randomIndex];
+        cur = randomWords[randomIndex];			
 		                
-    }else{
-		
-		highlightCurrentRow(currentIndex);
+    }else{		
 
 		currentIndex++;
 		
@@ -716,24 +784,9 @@ function nextWord() {
 		document.getElementById("info").innerHTML =
 		`${currentIndex + 1} / ${words.length}`;
 	
-        cur = words[currentIndex];       				
+        cur = words[currentIndex];   
 
     }
-	// อัปเดต Card เฉพาะตอนอยู่หน้า Card
-	if(displayMode === "card"){
-	
-		if(autoShowAnswer){
-			answerVisible=true;
-			showAnswer();
-		}else{
-			answerVisible=false;
-			showQuestion();
-		}
-	}
-	
-	if(autoSpeak){
-		speakChinese();
-	}			
 	
 		
 }
@@ -778,27 +831,10 @@ function previousWord(){
         cur = words[currentIndex];
 		
 		document.getElementById("info").innerHTML =
-		`${currentIndex + 1} / ${words.length}`;
-        
-        
+		`${currentIndex + 1} / ${words.length}`;              
 
     }
-	
-	// อัปเดต Card เฉพาะตอนอยู่หน้า Card
-	if(displayMode === "card"){
 		
-		if(autoShowAnswer){
-			answerVisible=true;
-			showAnswer();
-		}else{
-			answerVisible=false;
-			showQuestion();
-		}
-	}
-
-	if(autoSpeak){
-		speakChinese();
-	}
 }
 
 // =====================================================
@@ -843,6 +879,20 @@ function animateChange(callback, direction){
 function animateCardSpeaker(){
 
     const btn = document.getElementById("cardSpeakBtn");
+
+    if(!btn) return;
+
+    btn.classList.add("pop");
+
+    setTimeout(()=>{
+        btn.classList.remove("pop");
+    },250);
+
+}
+
+function animateTableSpeaker(index){
+
+    const btn = document.getElementById("tableSpeakBtn" + index);
 
     if(!btn) return;
 
@@ -913,18 +963,33 @@ function handleSwipe(){
 // Speaker
 // =====================================================
 
-function speakChinese(){
+function speakChinese(callback){
 
     if(!cur) return;
 
-	if(displayMode === "card"){
-		animateCardSpeaker();
-	} 
+    if(displayMode=="card"){
+
+        animateCardSpeaker();
+
+    }else{
+
+        const index = shuffleMode ? randomIndex : currentIndex;
+        animateTableSpeaker(index);
+
+    }
 
     const utter = new SpeechSynthesisUtterance(cur.c);
 
     utter.lang = "zh-CN";
     utter.rate = 0.8;
+
+    utter.onend = function(){
+
+        if(callback){
+            callback();
+        }
+
+    };
 
     speechSynthesis.cancel();
     speechSynthesis.speak(utter);

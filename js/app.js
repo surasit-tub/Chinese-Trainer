@@ -675,7 +675,10 @@ function showCurrentWord(){
 
     }else{
 
-        const index = shuffleMode ? randomIndex : currentIndex;
+        const index = shuffleMode
+            ? words.indexOf(cur)
+            : currentIndex;
+
         highlightCurrentRow(index);
 
     }

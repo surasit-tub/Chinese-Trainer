@@ -108,3 +108,8 @@ tr:nth-child(even){
     animation:fadeIn .2s;
 
 }
+
+.table-wrapper {
+    position: relative;
+    z-index: 1;
+}

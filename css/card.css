@@ -4,6 +4,23 @@
 	margin-bottom: 10px;
 }
 
+.info-bar, .info {
+    position: relative;
+    z-index: 5; /* อยู่ต่ำกว่าการ์ด จะได้ไม่บัง */
+    pointer-events: none; /* ปล่อยให้แรงกดทะลุผ่านกล่องข้อความนี้ไปโดนการ์ดได้ */
+}
+
+#card {
+	
+	user-select: none; 
+    -webkit-user-select: none;
+	
+    position: relative;
+    z-index: 10;
+    pointer-events: auto !important; /* มั่นใจว่าเปิดรับการกด */
+	cursor: default;
+}
+
 .card{
 	position: relative;
 	
@@ -81,3 +98,13 @@
     font-size:70px;
     color:#cc0000;
 }
+
+#clickable-answer-area,          /* โซนคำตอบทั้งหมด */
+.speak-btn,                     /* ปุ่มลำโพงบนการ์ด */
+.speak-btn-table,               /* ปุ่มลำโพงในตาราง */
+.answer-placeholder,            /* โซนแตะเพื่อดูคำแปล */
+button,                         /* ปุ่มอื่นๆ ทั้งหมด */
+select {                        /* ช่องเลือกหมวด/บทเรียน */
+    cursor: pointer;
+}
+

@@ -54,6 +54,8 @@ button{padding:8px 14px;margin:4px; font-size:80px;}
     z-index:100;
 
     opacity:.2;
+	
+	z-index: 15; /* อยู่สูงกว่าการ์ด เพื่อให้ยังกดปุ่มลูกศรได้ */
 		
 }
 
@@ -77,6 +79,11 @@ button{padding:8px 14px;margin:4px; font-size:80px;}
 
 }
 
+.nav-button-prev, 
+.nav-button-next {
+    cursor: pointer;
+}
+
 .card:hover .nav-btn{
 
     opacity:1;
@@ -90,6 +97,9 @@ button{padding:8px 14px;margin:4px; font-size:80px;}
     cursor:pointer;
     font-size:26px;
     color:#1976d2;
+	
+	pointer-events: auto !important;
+    z-index: 101;
 }
 
 .speak-btn:hover{

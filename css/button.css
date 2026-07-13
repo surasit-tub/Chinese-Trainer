@@ -128,16 +128,6 @@ button{padding:8px 14px;margin:4px; font-size:80px;}
     transform: scale(1.1);
 }
 
-/*
-#languageIcon{
-    transition: transform .25s ease;
-}
-
-#languageIcon.flip{
-    transform: scaleX(-1);
-}
-*/
-
 #languageText{
 
     display:flex;

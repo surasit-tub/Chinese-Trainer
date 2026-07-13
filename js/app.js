@@ -292,18 +292,26 @@ function renderCard() {
         </div>
     `;
 
-    // ผูก Event ปุ่มลำโพง
-    document.getElementById("cardSpeakBtn").onclick = (e) => {
-        e.stopPropagation(); // หยุดการส่ง Event
-        speakChinese();
-    };
+    // 1. ผูก Event ปุ่ม Speaker
+    const speakBtn = document.getElementById("cardSpeakBtn");
+    if(speakBtn) {
+        speakBtn.onclick = (e) => {
+            e.stopPropagation(); // หยุดไม่ให้ event ไปกวนที่อื่น
+            speakChinese();
+        };
+    }
 
-    // ผูก Event โซนคำตอบ
-    document.getElementById("clickable-answer-area").onclick = (e) => {
-        if (isSwipeAction) return;
-        answerVisible = !answerVisible;
-        renderCard();
-    };
+    // 2. ผูก Event โซนคำตอบ
+    const answerArea = document.getElementById("clickable-answer-area");
+    if(answerArea) {
+        answerArea.onclick = (e) => {
+            e.stopPropagation(); // หยุดไม่ให้ event ไปกวนที่อื่น
+            if (!isSwipeAction) {
+                answerVisible = !answerVisible;
+                renderCard();
+            }
+        };
+    }
 }
 
 // ผูกฟังก์ชันชั่วคราวเพื่อให้ไม่ขัดแย้งกับลอจิกเก่าตัวอื่น

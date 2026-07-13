@@ -50,6 +50,18 @@ function init() {
     buildCategory();
     changeCategory();
     setupEventListeners();
+		
+	document.getElementById("languageBtn").onclick = toggleLanguage;
+    document.getElementById("studyModeBtn").onclick = toggleStudyMode;
+	document.getElementById("speakerBtn").onclick = toggleSpeaker;
+	
+    document.getElementById("shuffleBtn").onclick = toggleShuffle;
+    document.getElementById("answerModeBtn").onclick = toggleAnswerMode;
+	document.getElementById("displayModeBtn").onclick = toggleDisplayMode;
+	document.getElementById("autoBtn").onclick = toggleAuto;
+    	
+	document.getElementById("prevBtn").onclick = previous;
+	document.getElementById("nextBtn").onclick = next;
 }
 
 // ตรวจสอบว่า DOM โหลดเสร็จและ datasets พร้อมแล้วค่อยเริ่ม
@@ -82,34 +94,12 @@ function setupEventListeners() {
     const card = document.getElementById("card");
     if (!card) return;
 
-    // ระบบลาก (เหมือนเดิม)
     card.addEventListener("mousedown", startDrag);
     card.addEventListener("mousemove", doDrag);
     card.addEventListener("mouseup", endDrag);
     card.addEventListener("mouseleave", cancelDrag);
-
-    // ใช้การตรวจสอบพื้นที่แบบ "หุ้มกล่องใหญ่"
-    card.addEventListener("click", function(e) {
-        // 1. ถ้ากดโดนปุ่มลำโพง
-        if (e.target.closest("#cardSpeakBtn")) return;
-
-        // 2. ถ้าลากอยู่ ไม่ให้กด
-        if (isSwipeAction) return;
-
-        // 3. หาพื้นที่คำตอบ
-        const answerArea = document.getElementById("clickable-answer-area");
-        if (!answerArea) return;
-
-        // 4. วิธีที่ชัวร์ที่สุด: เช็คว่าสิ่งที่คลิก "เป็นลูก" ของ answerArea หรือไม่
-        // ถ้าสิ่งที่คลิกอยู่ภายใน #clickable-answer-area ให้สลับสถานะ
-        if (answerArea.contains(e.target)) {
-            console.log("Toggle Answer!");
-            answerVisible = !answerVisible;
-            renderCard();
-        } else {
-            console.log("Clicked Question - Ignore");
-        }
-    });
+    
+    // ห้ามผูก 'click' ใดๆ ไว้ที่ #card ในฟังก์ชันนี้อีกเด็ดขาด
 }
 
 // =====================================================
@@ -282,7 +272,6 @@ function renderCard() {
 
     const isCt = languageMode === "ct";
     
-    // 1. วาดโครงสร้าง HTML
     card.innerHTML = `
         <div class="word-line">
             <div class="chinese">${isCt ? cur.c : cur.t}</div>
@@ -298,11 +287,23 @@ function renderCard() {
                     <div class="meaning">${isCt ? cur.t : cur.c}</div>
                 </div>` : `
                 <div class="answer-placeholder">
-                    <div class="reveal-text">แตะเพื่อดูคำแปล</div>
+                    <div class="reveal-text"></div>
                 </div>`}
         </div>
     `;
-    
+
+    // ผูก Event ปุ่มลำโพง
+    document.getElementById("cardSpeakBtn").onclick = (e) => {
+        e.stopPropagation(); // หยุดการส่ง Event
+        speakChinese();
+    };
+
+    // ผูก Event โซนคำตอบ
+    document.getElementById("clickable-answer-area").onclick = (e) => {
+        if (isSwipeAction) return;
+        answerVisible = !answerVisible;
+        renderCard();
+    };
 }
 
 // ผูกฟังก์ชันชั่วคราวเพื่อให้ไม่ขัดแย้งกับลอจิกเก่าตัวอื่น

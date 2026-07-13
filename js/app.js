@@ -55,6 +55,9 @@ function init() {
     document.getElementById("studyModeBtn").onclick = toggleStudyMode;
 	document.getElementById("speakerBtn").onclick = toggleSpeaker;
 	
+	document.getElementById("category").addEventListener("change", changeCategory);
+    document.getElementById("lesson").addEventListener("change", loadWords);	
+	
     document.getElementById("shuffleBtn").onclick = toggleShuffle;
     document.getElementById("answerModeBtn").onclick = toggleAnswerMode;
 	document.getElementById("displayModeBtn").onclick = toggleDisplayMode;
@@ -62,6 +65,8 @@ function init() {
     	
 	document.getElementById("prevBtn").onclick = previous;
 	document.getElementById("nextBtn").onclick = next;
+	
+
 }
 
 // ตรวจสอบว่า DOM โหลดเสร็จและ datasets พร้อมแล้วค่อยเริ่ม

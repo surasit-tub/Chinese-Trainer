@@ -52,57 +52,51 @@
 }
 
 /* Vocab */
-.card.vocab{
-	font-size:30px;
-    text-align:center;
+.card.vocab{	
+    text-align:center !important;
 }
 
 .card.vocab .chinese{
-    font-size:30px;
+    font-size:50px;
 }
 
 .card.vocab .pinyin{
-    font-size:20px;
+    font-size:30px;
     color:#333;
 }
 
 .card.vocab .thaiRead{
-    font-size:20px;
+    font-size:30px;
     color:#0066cc;
 }
 
 .card.vocab .meaning{
-    font-size:20px;
+    font-size:30px;
     color:#cc0000;
 }
 
 /* Dialog */
 .card.dialog{
     text-align:left !important;
-    /*padding:18px;*/
     line-height:1.6;
 }
 
-.card.dialog{
-    font-size:30px;
-}
-
 .card.dialog .chinese{
-    font-size:30px;
+    font-size:50px;
 }
 
 .card.dialog .pinyin{
-    font-size:20px;
+    font-size:30px;
     color:#333;
 }
 
 .card.dialog .thaiRead{
-    font-size:20px;
+    font-size:30px;
     color:#0066cc;
 }
 
 .card.dialog .meaning{
-    font-size:20px;
+    font-size:30px;
     color:#cc0000;
 }
 

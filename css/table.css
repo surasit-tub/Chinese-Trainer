@@ -19,13 +19,12 @@ tr:nth-child(even){
 
 
 .vocab-row td{
-    padding:4px;
     vertical-align:middle;
 }
 
 .vocab-cn{
     width:25%;
-    font-size:30px;
+    font-size:35px;
     color:#222;
 }
 
@@ -52,7 +51,7 @@ tr:nth-child(even){
 }
 
 .dialog-cn{
-    font-size:30px;
+    font-size:35px;
     color:#222;
 }
 

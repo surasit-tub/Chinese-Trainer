@@ -54,8 +54,17 @@ tr:nth-child(even){
     padding:4px;
 }
 
+.dialog-title{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+
+}
+
 .dialog-cn{
-    font-size:50px;
+    font-size:40px;
     color:#222;
 }
 

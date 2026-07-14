@@ -120,7 +120,7 @@
 }
 
 .speak-btn-table i{
-    /*font-size: 60px;*/
+    font-size: 20px;
     color: #2196f3;
 }
 
@@ -151,26 +151,18 @@ select{
     align-items:center;
     gap:4px;
 
-    /*font-size:70px;*/
     font-weight:bold;
 
 }
 
 #languageText .cn{
-
     color:#d32f2f;
-
 }
 
 #languageText .th{
-
     color:#1976d2;
-
 }
 
 #languageText .arrow{
-
-    /*font-size:50px;*/
     color:#666;
-
 }

@@ -26,44 +26,44 @@ tr:nth-child(even){
 
 .vocab-cn{
     width:25%;
-    font-size:60px;
+    font-size:50px;
     color:#222;
 }
 
 .vocab-pinyin{
     width:25%;
-    font-size:40px;
+    font-size:30px;
     color:#666;
 }
 
 .vocab-read{
     width:25%;
-    font-size:40px;
+    font-size:30px;
     color:#1e88e5;      /* ฟ้า */
 }
 
 .vocab-th{
     width:25%;
-    font-size:40px;
+    font-size:30px;
     color:#d32f2f;      /* แดง */
 }
 
 .dialog-item{
 
-    padding:12px 0;
+    padding:10px 0;
 
 }
 
 .dialog-cn{
 
-    font-size:60px;
+    font-size:50px;
     color:#222;
 
 }
 
 .dialog-pinyin{
 
-    font-size:40px;
+    font-size:30px;
     color:#666;
     margin-top:4px;
 
@@ -71,7 +71,7 @@ tr:nth-child(even){
 
 .dialog-read{
 
-    font-size:40px;
+    font-size:30px;
     color:#1e88e5;      /* ฟ้า */
     margin-top:2px;
 
@@ -79,7 +79,7 @@ tr:nth-child(even){
 
 .dialog-th{
 
-    font-size:40px;
+    font-size:30px;
     color:#d32f2f;      /* แดง */
     margin-top:4px;
 
@@ -89,7 +89,7 @@ tr:nth-child(even){
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:10px;
+    gap:4px;
 }
 
 .dialog-title .dialog-cn{

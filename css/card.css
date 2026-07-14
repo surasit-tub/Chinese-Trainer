@@ -7,6 +7,7 @@
     position: relative;
     z-index: 5; /* อยู่ต่ำกว่าการ์ด จะได้ไม่บัง */
     pointer-events: none; /* ปล่อยให้แรงกดทะลุผ่านกล่องข้อความนี้ไปโดนการ์ดได้ */
+	text-align: center;
 }
 
 #card {
@@ -27,12 +28,10 @@
 	
 	position: relative;
 	
-	/*min-height:500px;*/
 	background:white;
 
     border-radius:16px;
 
-    /*padding:25px;    */
 	box-shadow:0 8px 20px rgba(0,0,0,.15);
 	
 	transition: all .2s ease;
@@ -41,6 +40,7 @@
 	
 	padding: 20px;
 	margin-bottom: 4px;
+	vertical-align:middle;
 	
 }
 .card:hover{

@@ -3,15 +3,8 @@ table{
     border-collapse:collapse;
 }
 
-th{
-    background:#1976d2;
-    color:white;
-    font-size:60px;
-    padding:10px;
-}
-
 td{
-    font-size:60px;
+    font-size:30px;
     padding:10px;
     border-bottom:1px solid #ddd;
 }

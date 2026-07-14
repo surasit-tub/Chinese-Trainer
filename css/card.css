@@ -1,6 +1,6 @@
 .info {
 	font-size:30px;
-	margin-top: 4px;
+	margin-bottom: 4px;
 }
 
 .info-bar, .info {
@@ -22,6 +22,7 @@
 
 .card{
 	width: 100%;
+	min-height:300px;
 	box-sizing:border-box;
 	
 	position: relative;
@@ -39,7 +40,7 @@
 	animation:fadeIn .2s;
 	
 	padding: 20px;
-	margin-top: 4px;
+	margin-bottom: 4px;
 	
 }
 .card:hover{
@@ -52,6 +53,7 @@
 
 /* Vocab */
 .card.vocab{
+	font-size:30px;
     text-align:center;
 }
 
@@ -82,7 +84,7 @@
 }
 
 .card.dialog{
-    font-size:28px;
+    font-size:30px;
 }
 
 .card.dialog .chinese{

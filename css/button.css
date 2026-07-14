@@ -11,7 +11,7 @@
 	
 	flex: 1;
 	
-	font-size:30px;
+	font-size:var(--button-bar-font-size);
 	    
     background:#fff;
     border:1px solid #ddd;
@@ -38,7 +38,7 @@
 
     position:absolute;
 	
-	font-size:30px;
+	font-size:var(--button-nav-font-size);
 
     top:55%;
     transform:translateY(-50%);
@@ -108,7 +108,7 @@
 
 
 .speak-btn i{
-	font-size: 20px;
+	font-size: var(--button-speaker-font-size);
     color:#1976d2;
 }
 
@@ -120,7 +120,7 @@
 }
 
 .speak-btn-table i{
-    font-size: 20px;
+    font-size: var(--button-speaker-font-size);
     color: #2196f3;
 }
 
@@ -140,7 +140,7 @@
 }
 
 select{	
-	font-size:30px;
+	font-size:var(--select-font-size);
 	padding:5px;
 }
 

@@ -44,9 +44,9 @@
 	display:flex;
     flex-direction:column;
     justify-content:center;   /* จัดกึ่งกลางแนวตั้ง */
-
 	
 }
+
 .card:hover{
     box-shadow:0 12px 30px rgba(0,0,0,.2);
 }
@@ -61,21 +61,21 @@
 }
 
 .card.vocab .chinese{
-    font-size:50px;
+    font-size:var(--card-vocab-chinese-font-size);
 }
 
 .card.vocab .pinyin{
-    font-size:30px;
+    font-size:var(--card-vocab-pinyin-font-size);
     color:#333;
 }
 
 .card.vocab .thaiRead{
-    font-size:30px;
+    font-size:var(--card-vocab-thaiRead-font-size);
     color:#0066cc;
 }
 
 .card.vocab .meaning{
-    font-size:30px;
+    font-size:var(--card-vocab-meaning-font-size);
     color:#cc0000;
 }
 

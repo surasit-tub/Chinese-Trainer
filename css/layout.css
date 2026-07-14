@@ -14,6 +14,14 @@ select{padding:8px 14px;margin:4px; font-size:80px;}
   display:none;
 }
 
+.control-panel{
+    width:100%;
+}
+
+.selector-bar{
+    width:100%;
+}
+
 .word-line{
     display:flex;
     justify-content:center;

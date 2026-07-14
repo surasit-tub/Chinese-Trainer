@@ -23,25 +23,29 @@ tr:nth-child(even){
 }
 
 .vocab-cn{
-    width:25%;
-    font-size:35px;
+    width:30%;
+    font-size:40px;
     color:#222;
 }
 
+.vocab-speaker {
+	width:10%;
+}
+
 .vocab-pinyin{
-    width:25%;
+    width:20%;
     font-size:20px;
     color:#666;
 }
 
 .vocab-read{
-    width:25%;
+    width:20%;
     font-size:20px;
     color:#1e88e5;      /* ฟ้า */
 }
 
 .vocab-th{
-    width:25%;
+    width:20%;
     font-size:20px;
     color:#d32f2f;      /* แดง */
 }
@@ -51,7 +55,7 @@ tr:nth-child(even){
 }
 
 .dialog-cn{
-    font-size:35px;
+    font-size:50px;
     color:#222;
 }
 
@@ -68,7 +72,7 @@ tr:nth-child(even){
 
 .dialog-th{
 
-    font-size:20px;
+    font-size:30px;
     color:#d32f2f;      /* แดง */
 }
 

@@ -63,14 +63,14 @@ tr:nth-child(even){
 
 .dialog-cn{
 
-    font-size:80px;
+    font-size:60px;
     color:#222;
 
 }
 
 .dialog-pinyin{
 
-    font-size:50px;
+    font-size:40px;
     color:#666;
     margin-top:4px;
 
@@ -78,7 +78,7 @@ tr:nth-child(even){
 
 .dialog-read{
 
-    font-size:50px;
+    font-size:40px;
     color:#1e88e5;      /* ฟ้า */
     margin-top:2px;
 
@@ -86,7 +86,7 @@ tr:nth-child(even){
 
 .dialog-th{
 
-    font-size:50px;
+    font-size:40px;
     color:#d32f2f;      /* แดง */
     margin-top:4px;
 

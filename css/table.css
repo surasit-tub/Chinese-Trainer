@@ -109,7 +109,3 @@ tr:nth-child(even){
 
 }
 
-.table-wrapper {
-    position: relative;
-    z-index: 1;
-}

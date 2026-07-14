@@ -12,6 +12,10 @@ select{padding:8px 14px;margin:4px; font-size:80px;}
   border: 0px solid #ccc;
   
   display:none;
+  
+  position: relative;
+  z-index: 1;
+	
 }
 
 .control-panel{

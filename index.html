@@ -22,7 +22,7 @@
 
     <header class="control-panel">
         <div class="button-bar">
-            <button id="languageBtn" aria-label="เปลี่ยนภาษา">
+            <button type="button" id="languageBtn" aria-label="เปลี่ยนภาษา">
                 <span id="languageText">
                     <span class="cn">文</span>
                     <span class="arrow">→</span>
@@ -30,11 +30,11 @@
                 </span>
             </button>
 
-            <button id="studyModeBtn" aria-label="โหมดการเรียน">
+            <button type="button" id="studyModeBtn" aria-label="โหมดการเรียน">
                 <i id="studyModeIcon" class="fa-solid fa-chalkboard"></i>
             </button>
 
-            <button id="speakerBtn" aria-label="เปิด/ปิดเสียง">
+            <button type="button" id="speakerBtn" aria-label="เปิด/ปิดเสียง">
                 <span class="fa-stack">
                     <i class="fa-solid fa-volume-high fa-stack-1x"></i>
                     <i id="speakerSlash" class="fa-solid fa-slash fa-stack-1x hidden"></i>
@@ -46,25 +46,26 @@
             <select id="category">
                 <option value="">-- เลือกหมวดหมู่ --</option>
             </select>
-            
+        </div>
+		<div class="selector-bar">
             <select id="lesson">
                 <option value="">-- เลือกบทเรียน --</option>
             </select>
         </div>
 
         <div class="button-bar">    
-            <button id="shuffleBtn" aria-label="สลับคำศัพท์">
+            <button type="button" id="shuffleBtn" aria-label="สลับคำศัพท์">
                 <i id="shuffleIcon" class="fa-solid fa-list-ol"></i>
             </button>
 
-            <button id="answerModeBtn" aria-label="เปิด/ปิดคำแปล">
+            <button type="button" id="answerModeBtn" aria-label="เปิด/ปิดคำแปล">
                 <span class="fa-stack">
                     <i class="fa-regular fa-closed-captioning fa-stack-1x"></i>
                     <i id="answerSlash" class="fa-solid fa-slash fa-stack-1x hidden"></i>
                 </span>
             </button>
             
-            <button id="displayModeBtn" aria-label="เปลี่ยนโหมดการแสดงผล"> 
+            <button type="button" id="displayModeBtn" aria-label="เปลี่ยนโหมดการแสดงผล"> 
                 <i id="displayModeIcon" class="fa-solid fa-laptop-code"></i>
             </button>
             

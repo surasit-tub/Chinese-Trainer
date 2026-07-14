@@ -40,7 +40,11 @@
 	
 	padding: 20px;
 	margin-bottom: 4px;
-	vertical-align:middle;
+	
+	display:flex;
+    flex-direction:column;
+    justify-content:center;   /* จัดกึ่งกลางแนวตั้ง */
+
 	
 }
 .card:hover{

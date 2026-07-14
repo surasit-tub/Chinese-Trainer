@@ -4,8 +4,7 @@ table{
 }
 
 td{
-    font-size:30px;
-    padding:10px;
+    padding:4px;
     border-bottom:1px solid #ddd;
 }
 
@@ -20,80 +19,58 @@ tr:nth-child(even){
 
 
 .vocab-row td{
-    padding:8px 6px;
+    padding:4px;
     vertical-align:middle;
 }
 
 .vocab-cn{
     width:25%;
-    font-size:50px;
+    font-size:30px;
     color:#222;
 }
 
 .vocab-pinyin{
     width:25%;
-    font-size:30px;
+    font-size:20px;
     color:#666;
 }
 
 .vocab-read{
     width:25%;
-    font-size:30px;
+    font-size:20px;
     color:#1e88e5;      /* ฟ้า */
 }
 
 .vocab-th{
     width:25%;
-    font-size:30px;
+    font-size:20px;
     color:#d32f2f;      /* แดง */
 }
 
 .dialog-item{
-
-    padding:10px 0;
-
+    padding:4px;
 }
 
 .dialog-cn{
-
-    font-size:50px;
+    font-size:30px;
     color:#222;
-
 }
 
 .dialog-pinyin{
-
-    font-size:30px;
+    font-size:20px;
     color:#666;
-    margin-top:4px;
-
 }
 
 .dialog-read{
 
-    font-size:30px;
-    color:#1e88e5;      /* ฟ้า */
-    margin-top:2px;
-
+    font-size:20px;
+    color:#1e88e5;      /* ฟ้า */    
 }
 
 .dialog-th{
 
-    font-size:30px;
+    font-size:20px;
     color:#d32f2f;      /* แดง */
-    margin-top:4px;
-
-}
-
-.dialog-title{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:4px;
-}
-
-.dialog-title .dialog-cn{
-    margin:0;
 }
 
 #wordTable{

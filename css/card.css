@@ -1,7 +1,6 @@
 .info {
-	font-size:60px;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	font-size:30px;
+	margin-top: 4px;
 }
 
 .info-bar, .info {
@@ -27,17 +26,20 @@
 	
 	position: relative;
 	
-	min-height:500px;
+	/*min-height:500px;*/
 	background:white;
 
     border-radius:16px;
 
-    padding:25px;    
+    /*padding:25px;    */
 	box-shadow:0 8px 20px rgba(0,0,0,.15);
 	
 	transition: all .2s ease;
 	
 	animation:fadeIn .2s;
+	
+	padding: 20px;
+	margin-top: 4px;
 	
 }
 .card:hover{
@@ -54,28 +56,28 @@
 }
 
 .card.vocab .chinese{
-    font-size:100px;
+    font-size:30px;
 }
 
 .card.vocab .pinyin{
-    font-size:70px;
+    font-size:20px;
     color:#333;
 }
 
 .card.vocab .thaiRead{
-    font-size:60px;
+    font-size:20px;
     color:#0066cc;
 }
 
 .card.vocab .meaning{
-    font-size:70px;
+    font-size:20px;
     color:#cc0000;
 }
 
 /* Dialog */
 .card.dialog{
     text-align:left !important;
-    padding:18px;
+    /*padding:18px;*/
     line-height:1.6;
 }
 
@@ -84,21 +86,21 @@
 }
 
 .card.dialog .chinese{
-    font-size:100px;
+    font-size:30px;
 }
 
 .card.dialog .pinyin{
-    font-size:70px;
+    font-size:20px;
     color:#333;
 }
 
 .card.dialog .thaiRead{
-    font-size:60px;
+    font-size:20px;
     color:#0066cc;
 }
 
 .card.dialog .meaning{
-    font-size:70px;
+    font-size:20px;
     color:#cc0000;
 }
 

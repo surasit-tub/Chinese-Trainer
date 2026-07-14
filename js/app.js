@@ -51,13 +51,13 @@ function init() {
     changeCategory();
     setupEventListeners();
 		
-//	document.getElementById("languageBtn").onclick = toggleLanguage;
-//    document.getElementById("studyModeBtn").onclick = toggleStudyMode;
-//	document.getElementById("speakerBtn").onclick = toggleSpeaker;
+	document.getElementById("languageBtn").onclick = toggleLanguage;
+    document.getElementById("studyModeBtn").onclick = toggleStudyMode;
+	document.getElementById("speakerBtn").onclick = toggleSpeaker;
 	
 	document.getElementById("category").addEventListener("change", changeCategory);
     document.getElementById("lesson").addEventListener("change", loadWords);	
-/*	
+	
     document.getElementById("shuffleBtn").onclick = toggleShuffle;
     document.getElementById("answerModeBtn").onclick = toggleAnswerMode;
 	document.getElementById("displayModeBtn").onclick = toggleDisplayMode;
@@ -65,7 +65,7 @@ function init() {
     	
 	document.getElementById("prevBtn").onclick = previous;
 	document.getElementById("nextBtn").onclick = next;
-*/	
+	
 
 }
 

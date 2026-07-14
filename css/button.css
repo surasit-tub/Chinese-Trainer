@@ -1,7 +1,7 @@
 button{
 	padding:8px 14px;
 	margin:4px; 
-	font-size:60px;
+	/*font-size:60px;*/
 }
 
 .button-bar{
@@ -17,7 +17,7 @@ button{
 
 .button-bar button{
 
-    flex:1 1 0;
+    flex:1;
 
     background:#fff;
 
@@ -99,7 +99,7 @@ button{
     border:none;
     background:transparent;
     cursor:pointer;
-    font-size:26px;
+    /*font-size:26px;*/
     color:#1976d2;
 	
 	pointer-events: auto !important;
@@ -124,7 +124,7 @@ button{
 }
 
 .speak-btn-table i{
-    font-size: 60px;
+    /*font-size: 60px;*/
     color: #2196f3;
 }
 
@@ -144,7 +144,7 @@ button{
 select{
 	padding:8px 14px;
 	margin:4px; 
-	font-size:60px;	
+	/*font-size:60px;	*/
 }
 
 #languageText{
@@ -154,7 +154,7 @@ select{
     align-items:center;
     gap:10px;
 
-    font-size:70px;
+    /*font-size:70px;*/
     font-weight:bold;
 
 }
@@ -173,7 +173,7 @@ select{
 
 #languageText .arrow{
 
-    font-size:50px;
+    /*font-size:50px;*/
     color:#666;
 
 }

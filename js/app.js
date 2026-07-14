@@ -49,7 +49,7 @@ function init() {
     
     buildCategory();
     changeCategory();
-/*    setupEventListeners();*/
+    setupEventListeners();
 		
 //	document.getElementById("languageBtn").onclick = toggleLanguage;
 //    document.getElementById("studyModeBtn").onclick = toggleStudyMode;

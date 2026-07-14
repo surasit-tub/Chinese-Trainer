@@ -23,6 +23,8 @@
 
 .card{
 	width: 100%;
+	box-sizing:border-box;
+	
 	position: relative;
 	
 	min-height:500px;

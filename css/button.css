@@ -1,7 +1,7 @@
 button{
 	padding:8px 14px;
 	margin:4px; 
-	font-size:clamp(28px,6vw,80px);
+	font-size:60px;
 }
 
 .button-bar{
@@ -130,6 +130,21 @@ button{
 
 .speak-btn-table:hover i{
     transform: scale(1.1);
+}
+
+.selector-bar{
+    display:flex;
+    gap:8px;
+}
+
+.selector-bar select{
+    flex:1;    
+}
+
+select{
+	padding:8px 14px;
+	margin:4px; 
+	font-size:60px;	
 }
 
 #languageText{

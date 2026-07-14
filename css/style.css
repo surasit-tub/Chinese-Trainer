@@ -41,5 +41,8 @@
 	--table-dialog-pinyin-font-size : 20px;
 	--table-dialog-thaiRead-font-size : 20px;
 	--table-dialog-meaning-font-size : 20px;
+	
+	--answer-placeholder-width : 50%;
+	--answer-placeholder-height: 100px;
 			
 }

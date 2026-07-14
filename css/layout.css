@@ -43,8 +43,8 @@ body{
 
 .answer-placeholder{
 
-    width:50%;
-    height:90px;
+    width:var(--answer-placeholder-width);
+    height:var(--answer-placeholder-height);
 
     margin:20px auto;
 

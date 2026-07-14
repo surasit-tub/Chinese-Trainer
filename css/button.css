@@ -1,9 +1,3 @@
-button{
-	padding:8px 14px;
-	margin:4px; 
-	/*font-size:60px;*/
-}
-
 .button-bar{
     display:flex;
 
@@ -17,6 +11,11 @@ button{
 
 .button-bar button{
 
+	padding:8px 14px;
+	margin:4px; 
+	
+	font-size:60px;
+	
     flex:1;
 
     background:#fff;

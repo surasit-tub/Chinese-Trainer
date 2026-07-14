@@ -46,7 +46,7 @@ function init() {
         console.error("ไม่พบข้อมูล datasets!");
         return;
     }
-    
+/*    
     buildCategory();
     changeCategory();
     setupEventListeners();
@@ -65,7 +65,7 @@ function init() {
     	
 	document.getElementById("prevBtn").onclick = previous;
 	document.getElementById("nextBtn").onclick = next;
-	
+*/	
 
 }
 

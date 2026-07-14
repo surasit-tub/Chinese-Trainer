@@ -1,4 +1,8 @@
-button{padding:8px 14px;margin:4px; font-size:80px;}
+button{
+	padding:8px 14px;
+	margin:4px; 
+	font-size:clamp(28px,6vw,80px);
+}
 
 .button-bar{
     display:flex;
@@ -13,7 +17,7 @@ button{padding:8px 14px;margin:4px; font-size:80px;}
 
 .button-bar button{
 
-    flex:1;
+    flex:1 1 0;
 
     background:#fff;
 

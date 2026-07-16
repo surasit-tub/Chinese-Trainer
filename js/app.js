@@ -137,12 +137,9 @@ function setupEventListeners() {
 function startDrag(e) {
     if (e.target.closest("#cardSpeakBtn")) return;
     
-    // ดึงค่า X ไม่ว่าจะเป็น Mouse หรือ Touch
-    const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-    
     dragging = true;
     isSwipeAction = false;
-    startX = clientX;
+    startX = e.clientX; // PointerEvent มี clientX ให้ใช้เลย
     
     const card = document.getElementById("card");
     card.style.transition = "none";
@@ -151,15 +148,9 @@ function startDrag(e) {
 function doDrag(e) {
     if (!dragging) return;
     
-	// บังคับหยุด Event ทันทีเพื่อไม่ให้ Safari มองว่าเป็นการ Scroll
-    e.preventDefault();
-    e.stopPropagation();
-	    
-    const diffX = clientX - startX;
+    const diffX = e.clientX - startX;
     
-    // ถ้ามีการขยับเกิน 5px ให้ถือว่าตั้งใจลาก และกันการเลื่อนหน้าจอ
     if (Math.abs(diffX) > 5) {
-        if (e.cancelable) e.preventDefault(); 
         isSwipeAction = true;
     }
     
@@ -171,24 +162,16 @@ function endDrag(e) {
     if (!dragging) return;
     dragging = false;
 
-    // หาตำแหน่งสุดท้าย
-    const clientX = e.type.includes('touch') ? (e.changedTouches[0].clientX) : e.clientX;
-    const diffX = clientX - startX;
-
+    const diffX = e.clientX - startX;
     const card = document.getElementById("card");
-    card.style.transition = "transform .3s ease"; // ใส่ transition ตอนปล่อย
-
+    
+    card.style.transition = "transform .3s ease";
+    
     if (Math.abs(diffX) >= SWIPE_THRESHOLD) {
-        // ถ้าปัดผ่านเกณฑ์ให้สไลด์ออกไปนิดนึงแล้วเรียกฟังก์ชันเปลี่ยนหน้า
-        card.style.transform = `translateX(${diffX > 0 ? 500 : -500}px)`;
-        setTimeout(() => {
-            if (diffX > 0) previous(); else next();
-            card.style.transform = "translateX(0)";
-            card.style.opacity = "1";
-        }, 200);
-    } else {
-        card.style.transform = "translateX(0)";
+        if (diffX > 0) previous(); else next();
     }
+    
+    card.style.transform = "translateX(0)";
 }
 
 function cancelDrag() {

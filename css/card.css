@@ -16,15 +16,11 @@
     pointer-events: auto !important; /* มั่นใจว่าเปิดรับการกด */
 	cursor: default;	
 
-	/* ปิดการไฮไลท์ข้อความเวลาลาก */
-    -webkit-user-select: none;
-    user-select: none;
-    
-    /* บังคับให้ Safari รับรู้ว่า Element นี้เป็นตัวควบคุมการเคลื่อนที่ */
+	/* บอก Chrome ว่าฉันจะจัดการการลากเอง ไม่ต้อง Scroll หน้าจอ */
     touch-action: none; 
-    
-    /* ปิดการทำงานของระบบ Swipe ไปหน้าก่อนหน้า/ถัดไป ของ Safari */
-    overscroll-behavior: none;
+    /* ป้องกันการไฮไลท์ข้อความเวลาลาก */
+    user-select: none;
+    -webkit-user-select: none;
     
 }
 

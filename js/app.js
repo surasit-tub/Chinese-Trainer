@@ -106,9 +106,13 @@ function setupEventListeners() {
     card.addEventListener("mouseleave", cancelDrag);
     
     // สำหรับ มือถือ (Touch)
-    card.addEventListener("touchstart", startDrag, { passive: false });
-    card.addEventListener("touchmove", doDrag, { passive: false });
-    card.addEventListener("touchend", endDrag, { passive: false });
+	
+	// เปลี่ยนมาใช้ options object สำหรับ Safari
+    const options = { passive: false };
+	
+    card.addEventListener("touchstart", startDrag, options);
+    card.addEventListener("touchmove", doDrag, options);
+    card.addEventListener("touchend", endDrag, options);
 	
 	// ห้ามผูก 'click' ใดๆ ไว้ที่ #card ในฟังก์ชันนี้อีกเด็ดขาด
 }
@@ -134,6 +138,11 @@ function startDrag(e) {
 function doDrag(e) {
     if (!dragging) return;
     
+	// ลองสั่งแบบนี้ใน Safari โดยเฉพาะ
+    if (e.cancelable) {
+        e.preventDefault(); 
+    }
+	
     const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
     const diffX = clientX - startX;
     

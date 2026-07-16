@@ -45,12 +45,13 @@
     flex-direction:column;
     justify-content:center;   /* จัดกึ่งกลางแนวตั้ง */
 	
-	
-	cursor: grab;
-    touch-action: none; /* สำคัญ: ห้ามเบราว์เซอร์จัดการการสัมผัสเอง */
-    user-select: none;
+		
+    /* ใช้ touch-action: pan-y (อนุญาตให้เลื่อนขึ้นลงได้ แต่สกัดซ้ายขวา) */
+    touch-action: pan-y;
     -webkit-user-select: none;
-    transition: transform 0.2s ease-out; /* ช่วยให้การสไลด์ไม่กระตุก */
+    user-select: none;
+    /* สำคัญ: ป้องกัน Safari เด้งไฮไลท์เวลาจิ้มค้าง */
+    -webkit-tap-highlight-color: transparent;
 	
 }
 

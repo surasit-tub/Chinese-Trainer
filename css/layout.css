@@ -12,6 +12,9 @@ body{
     padding:10px;
 
     box-sizing:border-box;
+	
+	overscroll-behavior-x: none; /* กัน Safari ปัดไปหน้าก่อนหน้า/ถัดไป */
+    overscroll-behavior-y: none; /* กัน Safari ดึงหน้าเว็บลงมา Refresh */
 }
 
 .card-wrapper{

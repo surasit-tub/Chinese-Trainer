@@ -99,12 +99,18 @@ function setupEventListeners() {
     const card = document.getElementById("card");
     if (!card) return;
 
+	// สำหรับ PC (Mouse)
     card.addEventListener("mousedown", startDrag);
     card.addEventListener("mousemove", doDrag);
     card.addEventListener("mouseup", endDrag);
     card.addEventListener("mouseleave", cancelDrag);
     
-    // ห้ามผูก 'click' ใดๆ ไว้ที่ #card ในฟังก์ชันนี้อีกเด็ดขาด
+    // สำหรับ มือถือ (Touch)
+    card.addEventListener("touchstart", (e) => startDrag(e.touches[0]), { passive: false });
+    card.addEventListener("touchmove", (e) => doDrag(e.touches[0]), { passive: false });
+    card.addEventListener("touchend", endDrag);
+	
+	// ห้ามผูก 'click' ใดๆ ไว้ที่ #card ในฟังก์ชันนี้อีกเด็ดขาด
 }
 
 // =====================================================
@@ -122,9 +128,12 @@ function startDrag(e) {
 
 function doDrag(e) {
     if (!dragging) return;
+    
+    // ป้องกันการ scroll หน้าจอขณะลากการ์ด
+    if (e.preventDefault) e.preventDefault(); 
+    
     const diffX = e.clientX - startX;
     
-    // ถ้านิ้วขยับเกินค่าที่ตั้งไว้ ให้ถือเป็นการลาก (Swipe) เพื่อไม่ให้สลับคำแปลตอนปล่อยนิ้ว
     if (Math.abs(diffX) > CLICK_THRESHOLD) {
         isSwipeAction = true;
     }
@@ -132,6 +141,7 @@ function doDrag(e) {
     const card = document.getElementById("card");
     card.style.transform = `translateX(${diffX * 0.6}px)`;
 }
+
 
 function endDrag(e) {
     if (!dragging) return;
@@ -161,6 +171,9 @@ function cancelDrag() {
     card.style.transition = "transform .2s ease";
     card.style.transform = "translateX(0)";
 }
+
+// touch
+
 
 // =====================================================
 // Data Core Logic

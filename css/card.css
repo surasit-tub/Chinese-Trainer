@@ -7,20 +7,14 @@
     position: relative;
     z-index: 5; /* อยู่ต่ำกว่าการ์ด จะได้ไม่บัง */
     pointer-events: none; /* ปล่อยให้แรงกดทะลุผ่านกล่องข้อความนี้ไปโดนการ์ดได้ */
-	text-align: center;
-	
-	
+	text-align: center;	
 }
 
 #card {
-	
-	user-select: none; 
-    -webkit-user-select: none;
-	
     position: relative;
     z-index: 10;
     pointer-events: auto !important; /* มั่นใจว่าเปิดรับการกด */
-	cursor: default;	
+	cursor: default;		
 }
 
 .card{
@@ -46,6 +40,13 @@
 	display:flex;
     flex-direction:column;
     justify-content:center;   /* จัดกึ่งกลางแนวตั้ง */
+	
+	
+	cursor: grab;
+    touch-action: none; /* สำคัญ: ห้ามเบราว์เซอร์จัดการการสัมผัสเอง */
+    user-select: none;
+    -webkit-user-select: none;
+    transition: transform 0.2s ease-out; /* ช่วยให้การสไลด์ไม่กระตุก */
 	
 }
 

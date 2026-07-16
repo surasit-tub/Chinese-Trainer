@@ -16,9 +16,16 @@
     pointer-events: auto !important; /* มั่นใจว่าเปิดรับการกด */
 	cursor: default;	
 
-	touch-action: pan-y; /* ให้เลื่อนขึ้นลงได้ แต่สกัดการลากซ้ายขวามาที่ JS */
+	/* ปิดการไฮไลท์ข้อความเวลาลาก */
+    -webkit-user-select: none;
     user-select: none;
-    -webkit-tap-highlight-color: transparent;	
+    
+    /* บังคับให้ Safari รับรู้ว่า Element นี้เป็นตัวควบคุมการเคลื่อนที่ */
+    touch-action: none; 
+    
+    /* ปิดการทำงานของระบบ Swipe ไปหน้าก่อนหน้า/ถัดไป ของ Safari */
+    overscroll-behavior: none;
+    
 }
 
 .card{

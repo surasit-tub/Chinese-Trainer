@@ -95,6 +95,7 @@ function buildCategory() {
 // =====================================================
 // Event Listener Setup & Handle
 // =====================================================
+/*
 function setupEventListeners() {
     const card = document.getElementById("card");
     if (!card) return;
@@ -115,6 +116,18 @@ function setupEventListeners() {
     card.addEventListener("touchend", endDrag, options);
 	
 	// ห้ามผูก 'click' ใดๆ ไว้ที่ #card ในฟังก์ชันนี้อีกเด็ดขาด
+}
+*/
+
+function setupEventListeners() {
+    const card = document.getElementById("card");
+    if (!card) return;
+
+    // ใช้ Pointer Events แทน Mouse/Touch
+    card.addEventListener("pointerdown", startDrag);
+    window.addEventListener("pointermove", doDrag);
+    window.addEventListener("pointerup", endDrag);
+    window.addEventListener("pointercancel", endDrag);
 }
 
 // =====================================================
@@ -138,12 +151,10 @@ function startDrag(e) {
 function doDrag(e) {
     if (!dragging) return;
     
-	// ลองสั่งแบบนี้ใน Safari โดยเฉพาะ
-    if (e.cancelable) {
-        e.preventDefault(); 
-    }
-	
-    const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+	// บังคับหยุด Event ทันทีเพื่อไม่ให้ Safari มองว่าเป็นการ Scroll
+    e.preventDefault();
+    e.stopPropagation();
+	    
     const diffX = clientX - startX;
     
     // ถ้ามีการขยับเกิน 5px ให้ถือว่าตั้งใจลาก และกันการเลื่อนหน้าจอ

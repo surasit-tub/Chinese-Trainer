@@ -106,9 +106,9 @@ function setupEventListeners() {
     card.addEventListener("mouseleave", cancelDrag);
     
     // สำหรับ มือถือ (Touch)
-    card.addEventListener("touchstart", (e) => startDrag(e.touches[0]), { passive: false });
-    card.addEventListener("touchmove", (e) => doDrag(e.touches[0]), { passive: false });
-    card.addEventListener("touchend", endDrag);
+    card.addEventListener("touchstart", startDrag, { passive: false });
+    card.addEventListener("touchmove", doDrag, { passive: false });
+    card.addEventListener("touchend", endDrag, { passive: false });
 	
 	// ห้ามผูก 'click' ใดๆ ไว้ที่ #card ในฟังก์ชันนี้อีกเด็ดขาด
 }
@@ -116,34 +116,31 @@ function setupEventListeners() {
 // =====================================================
 // Drag & Swipe Logic
 // =====================================================
-function getX(e) {
-    // ถ้าเป็น touch ให้ใช้ e.touches[0].clientX ถ้าเป็น mouse ให้ใช้ e.clientX
-    return e.touches ? e.touches[0].clientX : e.clientX;
-}
 
 function startDrag(e) {
     if (e.target.closest("#cardSpeakBtn")) return;
     
+    // ดึงค่า X ไม่ว่าจะเป็น Mouse หรือ Touch
+    const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+    
     dragging = true;
     isSwipeAction = false;
+    startX = clientX;
+    
     const card = document.getElementById("card");
     card.style.transition = "none";
-    startX = getX(e); // ใช้ฟังก์ชันกลาง
 }
 
 function doDrag(e) {
     if (!dragging) return;
     
-    const currentX = getX(e);
-    const diffX = currentX - startX;
+    const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+    const diffX = clientX - startX;
     
-    if (Math.abs(diffX) > CLICK_THRESHOLD) {
+    // ถ้ามีการขยับเกิน 5px ให้ถือว่าตั้งใจลาก และกันการเลื่อนหน้าจอ
+    if (Math.abs(diffX) > 5) {
+        if (e.cancelable) e.preventDefault(); 
         isSwipeAction = true;
-    }
-    
-    // ป้องกันหน้าจอมือถือ scroll ขณะลาก
-    if (Math.abs(diffX) > 5) { // ถ้าเริ่มมีการขยับนิ้ว
-         if (e.cancelable) e.preventDefault();
     }
     
     const card = document.getElementById("card");
@@ -154,15 +151,22 @@ function endDrag(e) {
     if (!dragging) return;
     dragging = false;
 
+    // หาตำแหน่งสุดท้าย
+    const clientX = e.type.includes('touch') ? (e.changedTouches[0].clientX) : e.clientX;
+    const diffX = clientX - startX;
+
     const card = document.getElementById("card");
-    // หาค่า X ล่าสุด
-    const endX = (e.changedTouches) ? e.changedTouches[0].clientX : e.clientX;
-    const diffX = endX - startX;
+    card.style.transition = "transform .3s ease"; // ใส่ transition ตอนปล่อย
 
     if (Math.abs(diffX) >= SWIPE_THRESHOLD) {
-        if (diffX > 0) previous(); else next();
+        // ถ้าปัดผ่านเกณฑ์ให้สไลด์ออกไปนิดนึงแล้วเรียกฟังก์ชันเปลี่ยนหน้า
+        card.style.transform = `translateX(${diffX > 0 ? 500 : -500}px)`;
+        setTimeout(() => {
+            if (diffX > 0) previous(); else next();
+            card.style.transform = "translateX(0)";
+            card.style.opacity = "1";
+        }, 200);
     } else {
-        card.style.transition = "transform .2s ease";
         card.style.transform = "translateX(0)";
     }
 }

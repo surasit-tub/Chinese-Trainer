@@ -14,7 +14,11 @@
     position: relative;
     z-index: 10;
     pointer-events: auto !important; /* มั่นใจว่าเปิดรับการกด */
-	cursor: default;		
+	cursor: default;	
+
+	touch-action: pan-y; /* ให้เลื่อนขึ้นลงได้ แต่สกัดการลากซ้ายขวามาที่ JS */
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;	
 }
 
 .card{

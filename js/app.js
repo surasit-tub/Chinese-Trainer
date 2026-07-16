@@ -116,50 +116,54 @@ function setupEventListeners() {
 // =====================================================
 // Drag & Swipe Logic
 // =====================================================
+function getX(e) {
+    // ถ้าเป็น touch ให้ใช้ e.touches[0].clientX ถ้าเป็น mouse ให้ใช้ e.clientX
+    return e.touches ? e.touches[0].clientX : e.clientX;
+}
+
 function startDrag(e) {
-    if (e.target.closest("#cardSpeakBtn")) return; // ข้ามปุ่มลำโพง
+    if (e.target.closest("#cardSpeakBtn")) return;
     
     dragging = true;
-    isSwipeAction = false; 
+    isSwipeAction = false;
     const card = document.getElementById("card");
     card.style.transition = "none";
-    startX = e.clientX;
+    startX = getX(e); // ใช้ฟังก์ชันกลาง
 }
 
 function doDrag(e) {
     if (!dragging) return;
     
-    // ป้องกันการ scroll หน้าจอขณะลากการ์ด
-    if (e.preventDefault) e.preventDefault(); 
-    
-    const diffX = e.clientX - startX;
+    const currentX = getX(e);
+    const diffX = currentX - startX;
     
     if (Math.abs(diffX) > CLICK_THRESHOLD) {
         isSwipeAction = true;
+    }
+    
+    // ป้องกันหน้าจอมือถือ scroll ขณะลาก
+    if (Math.abs(diffX) > 5) { // ถ้าเริ่มมีการขยับนิ้ว
+         if (e.cancelable) e.preventDefault();
     }
     
     const card = document.getElementById("card");
     card.style.transform = `translateX(${diffX * 0.6}px)`;
 }
 
-
 function endDrag(e) {
     if (!dragging) return;
     dragging = false;
 
     const card = document.getElementById("card");
-    const diffX = e.clientX - startX;
+    // หาค่า X ล่าสุด
+    const endX = (e.changedTouches) ? e.changedTouches[0].clientX : e.clientX;
+    const diffX = endX - startX;
 
-    // ตรวจสอบระยะลากว่าต้องการเปลี่ยนคำศัพท์หรือไม่
     if (Math.abs(diffX) >= SWIPE_THRESHOLD) {
         if (diffX > 0) previous(); else next();
     } else {
-        // ลากไม่ถึงเกณฑ์ ให้ดึงการ์ดกลับมาตรงกลาง
         card.style.transition = "transform .2s ease";
         card.style.transform = "translateX(0)";
-        
-        // บังคับหน่วงสเตทลากลงนิดหน่อย เพื่อให้ไม่ไปทับซ้อนกับ Click Event
-        setTimeout(() => { isSwipeAction = false; }, 50);
     }
 }
 
